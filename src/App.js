@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import SimpleMap from './SimpleMap';
+import Map from './Map';
 
 function App() {
   return (
     <div className="App">
-      <SimpleMap/>
+      <Map/>
     </div>
   );
 }

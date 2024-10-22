@@ -1,0 +1,17 @@
+.icon-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.icon {
+  width: 75px;
+  height: 75px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
