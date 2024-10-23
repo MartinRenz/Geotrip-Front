@@ -4,7 +4,7 @@ import markerIcon from "./icon.png";
 
 const userIcon = new L.Icon({
   iconUrl: markerIcon,
-  iconSize: [45, 50],
+  iconSize: [50, 50],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   // shadowUrl: markerShadow,
