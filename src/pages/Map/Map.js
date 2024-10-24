@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import userIcon from "./assets/icons/userIcon";
-import uIcon from './assets/icons/user-icon.png'
-import geoTripIcon from './assets/icons/geo-trip-icon.png'
-import SearchBar from './components/SearchBar/SearchBar';
-import Icon from './components/Icon/Icon';
-import ErrorNotification from "./ErrorNotification";
+import userIcon from "../../assets/icons/userIcon";
+import uIcon from '../../assets/icons/user-icon.png'
+import geoTripIcon from '../../assets/icons/geo-trip-icon.png'
+import SearchBar from '../../components/SearchBar/SearchBar';
+import Icon from '../../components/Icon/Icon';
+import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
 
 function Map() {

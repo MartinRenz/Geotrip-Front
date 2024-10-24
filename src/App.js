@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import Map from './Map';
+import Map from './pages/Map/Map';
+import RoutesApp from './Routes';
 
 function App() {
   return (
     <div className="App">
-      <Map/>
+      <RoutesApp/>
     </div>
   );
 }
