@@ -77,12 +77,15 @@ function Map() {
       <Icon 
         bottom="20px" 
         left="20px"
-        icon={uIcon} 
+        icon={uIcon}
+        iconType = "ProfileIcon" 
       />
       <Icon 
         bottom="20px" 
         right="20px"
         icon={geoTripIcon}
+        iconType = "PointIcon"
+        flexDirection = "row-reverse"
       />
     </div>
   );
