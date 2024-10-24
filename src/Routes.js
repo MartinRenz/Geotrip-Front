@@ -9,7 +9,7 @@ function RoutesApp() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/map" element={<Map />} />
+        <Route path="*" element={<Map />} />
       </Routes>
     </BrowserRouter>
   );
