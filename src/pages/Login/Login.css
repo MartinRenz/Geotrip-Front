@@ -1,9 +1,78 @@
 body {
     background-color: #ffcd90;
+    display: flex;
+    justify-content: center;
     width: 100vw;
     height: 100vh;
 }
 
-.login {
-    
+.loginContainer {
+    display: flex;
+    padding-top: 10vh;
+    flex-direction: column;
+    width: 256px;
+}
+
+.logo {
+    width: 256px;
+    padding-bottom: 10px;
+}
+
+label {
+    font: bolder;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type=text],
+select {
+    width: 100%;
+    padding: 10px 5%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=password],
+select {
+    width: 100%;
+    padding: 10px 5%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input.loginButton {
+    font-size: larger;
+    width: 100%;
+    background-color: #FD7B03;
+    color: white;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input.loginButton:hover {
+    background-color: #FFa652;
+}
+
+input.registerButton {
+    font-size: larger;
+    width: 100%;
+    background-color: #ffffff;
+    color: #FD7B03;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input.registerButton:hover {
+    background-color: #FFF4DF;
 }
