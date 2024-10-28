@@ -48,6 +48,7 @@ select {
 input.loginButton {
     font-size: larger;
     width: 100%;
+    height: 70px;
     background-color: #FD7B03;
     color: white;
     padding: 10px;
