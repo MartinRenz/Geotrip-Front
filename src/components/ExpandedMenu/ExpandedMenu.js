@@ -3,7 +3,7 @@ import './ExpandedMenu.css'
 function ExpandedMenu({ items, }) {
     return (
         <div className="expandedMenu">
-            {items.map((i) => { return <div><img src={i} width={"75px"} height={"75px"} alt={""}></img></div> })}
+            {items.map((i) => { return <div className='icon'><img src={i} width={"75px"} height={"75px"} alt={""}></img></div> })}
         </div>
     );
 };
