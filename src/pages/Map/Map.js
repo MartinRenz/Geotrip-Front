@@ -13,16 +13,6 @@ function Map() {
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
 
-  // Versão teste
-  const pointsOfInterest = [
-    { id: 1, name: 'Restaurante A', latitude: -29.6922331, longitude: -53.8571042 },
-    { id: 2, name: 'Museu B', latitude: -29.6907624, longitude: -53.8547881 },
-    { id: 3, name: 'Praça C', latitude: -29.6930283, longitude: -53.8556234 },
-    { id: 4, name: 'Parque D', latitude: -29.6903856, longitude: -53.8580286 },
-    { id: 5, name: 'Loja E', latitude: -29.6942150, longitude: -53.8534207 },
-    { id: 6, name: 'Teatro F', latitude: -29.6911167, longitude: -53.8549531 },
-  ];
-
   const handleSearch = (searchTerm) => {
     const foundPoint = pointsOfInterest.find(poi =>
       poi.name.toLowerCase() === searchTerm.toLowerCase()
@@ -63,6 +53,16 @@ function Map() {
       mapRef.current.setView([location.latitude, location.longitude], 18);
     }
   }, [location]);
+
+    // Versão teste
+  const pointsOfInterest = [
+    { id: 1, name: 'Restaurante A', latitude: location.latitude + 0.0010, longitude: location.longitude + 0.0010 },
+    { id: 2, name: 'Museu B', latitude: location.latitude - 0.0012, longitude: location.longitude - 0.0012 },
+    { id: 3, name: 'Praça C', latitude: location.latitude + 0.0014, longitude: location.longitude - 0.0014 },
+    { id: 4, name: 'Parque D', latitude: location.latitude - 0.0016, longitude: location.longitude + 0.0016 },
+    { id: 5, name: 'Loja E', latitude: location.latitude + 0.0012, longitude: location.longitude + 0.0018 },
+    { id: 6, name: 'Teatro F', latitude: location.latitude + 0.0014, longitude: location.longitude - 0.0014 },
+  ];
 
   // Renderiza uma mensagem de erro caso ocorra.
   if (error) {
