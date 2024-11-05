@@ -1,5 +1,6 @@
 {
   "name": "leaflet-map-app",
+  "homepage": "https://martinrenz.github.io/Geotrip-Front/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
