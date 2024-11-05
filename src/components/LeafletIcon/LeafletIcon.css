@@ -1,0 +1,9 @@
+.custom-marker {
+  transition: transform 0.2s ease;
+  /* Adiciona uma transição suave */
+}
+
+.custom-marker:hover {
+  transform: scale(1.2);
+  /* Aumenta o ícone em 20% quando o mouse está sobre ele */
+}
