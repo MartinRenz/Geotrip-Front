@@ -5,11 +5,13 @@ import uIcon from '../../assets/icons/user-icon.png'
 import geoTripIcon from '../../assets/icons/geo-trip-icon.png'
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Icon from '../../components/Icon/Icon';
+import PointMenu from '../../components/PointMenu/PointMenu.js'
 import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
 
 function Map() {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+  const [selectedPoint, setSelectedPoint] = useState(null);
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
 
@@ -54,7 +56,7 @@ function Map() {
     }
   }, [location]);
 
-    // Versão teste
+  // Versão teste
   const pointsOfInterest = [
     { id: 1, name: 'Restaurante A', latitude: location.latitude + 0.0010, longitude: location.longitude + 0.0010 },
     { id: 2, name: 'Museu B', latitude: location.latitude - 0.0012, longitude: location.longitude - 0.0012 },
@@ -71,7 +73,7 @@ function Map() {
 
   return (
     <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
-      <SearchBar pointsOfInterest={pointsOfInterest} onSearch={handleSearch}/>
+      <SearchBar pointsOfInterest={pointsOfInterest} onSearch={handleSearch} />
       <MapContainer
         center={[location.latitude, location.longitude]}
         zoom={18}
@@ -82,9 +84,9 @@ function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker 
-          position={[location.latitude, location.longitude]} 
-          icon={leafletIcon} 
+        <Marker
+          position={[location.latitude, location.longitude]}
+          icon={leafletIcon}
           eventHandlers={{
             click: () => {
               console.warn("Clicou")
@@ -97,29 +99,46 @@ function Map() {
         </Marker>
         {/* <ErrorNotification message="B" onClose="A"></ErrorNotification> */}
         {pointsOfInterest.map((poi) => (
-          <Marker 
-            key={poi.id} 
-            position={[poi.latitude, poi.longitude]} 
+          <Marker
+            key={poi.id}
+            position={[poi.latitude, poi.longitude]}
             icon={leafletIcon}
+            eventHandlers={{
+              click: () => {
+                setSelectedPoint(poi);
+              },
+              mouseover: (e) => {
+                e.target.openPopup();
+              },
+              mouseout: (e) => {
+                e.target.closePopup();
+              }
+            }}
           >
             <Popup>
               <p>{poi.name}</p>
             </Popup>
           </Marker>
-      ))}
+        ))}
       </MapContainer>
-      <Icon 
-        bottom="20px" 
+      {selectedPoint && (
+        <PointMenu
+          point={selectedPoint}
+          onClose={() => setSelectedPoint(null)}
+        />
+      )}
+      <Icon
+        bottom="20px"
         left="20px"
         icon={uIcon}
-        iconType = "ProfileIcon" 
+        iconType="ProfileIcon"
       />
-      <Icon 
-        bottom="20px" 
+      <Icon
+        bottom="20px"
         right="20px"
         icon={geoTripIcon}
-        iconType = "PointIcon"
-        flexDirection = "row-reverse"
+        iconType="PointIcon"
+        flexDirection="row-reverse"
       />
     </div>
   );
