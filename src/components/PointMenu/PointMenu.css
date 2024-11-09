@@ -7,15 +7,85 @@
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 20px;
     z-index: 1000;
+    overflow-y: auto;
+    padding-bottom: 100px;
 }
 
-.pointMenu {
+.pointMenuContainer {
+    position: relative;
+    min-width: 300px;
+    max-width: 500px;
+    width: 100%;
+    flex-grow: 0;
+}
+
+.pointMenuHeader {
+    position: relative; 
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    max-width: 300px;
+    min-width: 300px;
+    max-width: 500px;
     width: 100%;
+    flex-grow: 0;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.pointMenuHeader img {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.pointMenuContent {
+    position: relative; 
+    background: white;
+    padding: 20px;
+    padding-top: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    min-width: 300px;
+    max-width: 500px;
+    width: 100%;
+    flex-grow: 0;
+    margin-bottom: 5vh;
+}
+
+.closeButton {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 0;
+}
+
+.closeButton:hover {
+    background-color: #e04e4e;
+}
+
+.pointMenuHeader h3 {
+    text-align: center;
+    margin: 5px;
 }
