@@ -23,7 +23,7 @@
 }
 
 .pointMenuHeader {
-    position: relative; 
+    position: relative;
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -49,7 +49,7 @@
 }
 
 .pointMenuContent {
-    position: relative; 
+    position: relative;
     background: white;
     padding: 20px;
     padding-top: 5px;
@@ -88,4 +88,37 @@
 .pointMenuHeader h3 {
     text-align: center;
     margin: 5px;
+}
+
+.pointMenuCheckInField {
+    margin-top: 10px;
+    width: 100%;
+    height: 70px;
+    border-radius: 5px;
+    background-color: #DFDFDF;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.pointMenuCheckInField button {
+    margin-left: auto;
+    margin-right: 20px;
+    float: right;
+    height: 80%;
+    min-width: 80px;
+    max-width: 100px;
+    border-radius: 10px;
+    border-color: #FD7B03;
+    background-color: #FD7B03;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.pointMenuCheckInField button:hover {
+    background-color: #FFa652;
+}
+
+.pointMenuCheckInField h3 {
+    margin: 10px;
 }
