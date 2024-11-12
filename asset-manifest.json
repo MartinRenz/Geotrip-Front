@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/Geotrip-Front/static/css/main.31cb0bb7.css",
-    "main.js": "/Geotrip-Front/static/js/main.98438c95.js",
-    "static/js/453.0ad38193.chunk.js": "/Geotrip-Front/static/js/453.0ad38193.chunk.js",
+    "main.css": "/Geotrip-Front/static/css/main.b0f09f58.css",
+    "main.js": "/Geotrip-Front/static/js/main.dd95deee.js",
+    "static/js/453.39a0b888.chunk.js": "/Geotrip-Front/static/js/453.39a0b888.chunk.js",
     "static/media/logo.png": "/Geotrip-Front/static/media/logo.7cdd8113c1ce90594043.png",
     "static/media/geo-trip-icon.png": "/Geotrip-Front/static/media/geo-trip-icon.6a62b33252574a5a3986.png",
     "static/media/point-new-icon.png": "/Geotrip-Front/static/media/point-new-icon.3f8a62a707e05de3334f.png",
     "static/media/point-history-icon.png": "/Geotrip-Front/static/media/point-history-icon.c860f4613120850a439e.png",
     "static/media/logo.svg": "/Geotrip-Front/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/Geotrip-Front/index.html",
-    "main.31cb0bb7.css.map": "/Geotrip-Front/static/css/main.31cb0bb7.css.map",
-    "main.98438c95.js.map": "/Geotrip-Front/static/js/main.98438c95.js.map",
-    "453.0ad38193.chunk.js.map": "/Geotrip-Front/static/js/453.0ad38193.chunk.js.map"
+    "main.b0f09f58.css.map": "/Geotrip-Front/static/css/main.b0f09f58.css.map",
+    "main.dd95deee.js.map": "/Geotrip-Front/static/js/main.dd95deee.js.map",
+    "453.39a0b888.chunk.js.map": "/Geotrip-Front/static/js/453.39a0b888.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.31cb0bb7.css",
-    "static/js/main.98438c95.js"
+    "static/css/main.b0f09f58.css",
+    "static/js/main.dd95deee.js"
   ]
 }
