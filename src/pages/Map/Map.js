@@ -24,6 +24,12 @@ function Map() {
     }
   };
 
+  function HandleIsPointOwner(point) {
+    // TODO: CHECAR ID DO USUARIO SE EH IGUAL A ID DO PONTO SELECIONADO
+    // RETORNAR TRUE SE SIM
+    return false;
+  }
+
   // Atualiza a localização do usuário.
   useEffect(() => {
     if (navigator.geolocation) {
@@ -125,6 +131,7 @@ function Map() {
         <PointMenu
           point={selectedPoint}
           onClose={() => setSelectedPoint(null)}
+          isOwner={HandleIsPointOwner(selectedPoint)}
         />
       )}
       <Icon

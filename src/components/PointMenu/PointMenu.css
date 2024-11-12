@@ -85,6 +85,29 @@
     background-color: #e04e4e;
 }
 
+.deleteButton { 
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 60px;
+    height: 60px;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 0;
+}
+
+.deleteButton:hover {
+    background-color: #ff4040;
+}
+
 .pointMenuHeader h3 {
     text-align: center;
     margin: 5px;

@@ -1,9 +1,15 @@
+import React, { useState, useEffect, useRef } from 'react';
 import './PointMenu.css';
 import placeHolder from '../../assets/icons/placeholder.jpg';
 
-function PointMenu({ point, onClose }) {
+function PointMenu({ point, onClose, isOwner }) {
+
     function HandleCheckInButton() {
         // INCREMENTA CHECK-IN DO PONTO
+    }
+
+    function HandleDeleteButton() {
+        // REMOVE PONTO
     }
 
     return (
@@ -11,6 +17,7 @@ function PointMenu({ point, onClose }) {
             <div className="pointMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <div className="pointMenuHeader">
                     <button onClick={onClose} class="closeButton">✕</button>
+                    {isOwner && (<button onClick={HandleDeleteButton} class="deleteButton">🗑️</button>)}
                     <h3 style={{ textAlign: 'center' }}>{point.name}</h3>
                     <img src={placeHolder} alt='gato makonha'>
                     </img>
