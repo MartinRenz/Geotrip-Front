@@ -139,6 +139,7 @@ function Map() {
         left="20px"
         icon={uIcon}
         iconType="ProfileIcon"
+        flexDirection="row"
       />
       <Icon
         bottom="20px"
