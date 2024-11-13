@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import leafletIcon from "../LeafletIcon/LeafletIcon.js";
 import 'leaflet/dist/leaflet.css';
+import { createPointOfInterest } from '../../services/pointApi.js'
 import './PointInsertMenu.css';
 
 function PointInsertMenu({ isOpen, onClose, onConfirm }) {
@@ -64,14 +65,24 @@ function PointInsertMenu({ isOpen, onClose, onConfirm }) {
         };
     }, [onClose]);
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         if (selectedPosition && pointName.trim() !== '') {
-            onConfirm({ name: pointName, position: selectedPosition });
-            onClose();
+            try {
+                const response = await createPointOfInterest({ 
+                    name: pointName, 
+                    latitude: selectedPosition.lat, 
+                    longitude: selectedPosition.lng,
+                    userId: 1
+                });
+                onConfirm({ name: pointName, position: selectedPosition });
+                onClose();
+            } catch (error) {
+                alert('Error creating point of interest. Please try again.');
+            }
         } else {
             alert('Please provide a name and select a point on the map.');
         }
-    };
+    };    
 
     return isOpen ? (
         <div className="pointInsertMenuOverlay" onClick={onClose}>

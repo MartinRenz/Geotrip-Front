@@ -83,7 +83,7 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection }) {
           isOpen={isPointInsertOpen}
           onClose={() => setIsPointInsertOpen(false)}
           onConfirm={(pointData) => {
-            console.log('Point Confirmed:', pointData);
+            window.alert('Point created!');
           }}
         />
       )}

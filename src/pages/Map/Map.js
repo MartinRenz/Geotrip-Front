@@ -6,28 +6,26 @@ import geoTripIcon from '../../assets/icons/geo-trip-icon.png'
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Icon from '../../components/Icon/Icon';
 import PointMenu from '../../components/PointMenu/PointMenu.js'
+import { getPointsByCoordinates } from '../../services/pointApi.js';  
 import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
 
 function Map() {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [selectedPoint, setSelectedPoint] = useState(null);
+  const [pointsOfInterest, setPointsOfInterest] = useState([]);
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
 
   const handleSearch = (searchTerm) => {
-    const foundPoint = pointsOfInterest.find(poi =>
-      poi.name.toLowerCase() === searchTerm.toLowerCase()
-    );
-    if (foundPoint) {
-      mapRef.current.setView([foundPoint.latitude, foundPoint.longitude], 18);
-    }
+    if(searchTerm)
+      mapRef.current.setView([searchTerm.latitude, searchTerm.longitude], 18);
   };
 
   function HandleIsPointOwner(point) {
     // TODO: CHECAR ID DO USUARIO SE EH IGUAL A ID DO PONTO SELECIONADO
     // RETORNAR TRUE SE SIM
-    return false;
+    return true;
   }
 
   // Atualiza a localização do usuário.
@@ -62,15 +60,49 @@ function Map() {
     }
   }, [location]);
 
-  // Versão teste
-  const pointsOfInterest = [
-    { id: 1, name: 'Restaurante A', latitude: location.latitude + 0.0010, longitude: location.longitude + 0.0010 },
-    { id: 2, name: 'Museu B', latitude: location.latitude - 0.0012, longitude: location.longitude - 0.0012 },
-    { id: 3, name: 'Praça C', latitude: location.latitude + 0.0014, longitude: location.longitude - 0.0014 },
-    { id: 4, name: 'Parque D', latitude: location.latitude - 0.0016, longitude: location.longitude + 0.0016 },
-    { id: 5, name: 'Loja E', latitude: location.latitude + 0.0012, longitude: location.longitude + 0.0018 },
-    { id: 6, name: 'Teatro F', latitude: location.latitude + 0.0014, longitude: location.longitude - 0.0014 },
-  ];
+  // Captura os limites do mapa
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map) {
+      const handleMoveEnd = async () => {
+        const bounds = map.getBounds();
+        const northEast = bounds.getNorthEast();
+        const southWest = bounds.getSouthWest();
+  
+        // Criando o objeto para enviar à API com as coordenadas
+        const coordinates = {
+          northEast: {
+            latitude: northEast.lat,
+            longitude: northEast.lng,
+          },
+          southWest: {
+            latitude: southWest.lat,
+            longitude: southWest.lng,
+          },
+        };
+  
+        console.log("Visible area:", coordinates);
+  
+        try {
+          // Chamando o método getPointsByCoordinates e passando as coordenadas
+          const data = await getPointsByCoordinates({northEast: coordinates.northEast, southWest: coordinates.southWest});
+          console.warn(data.points)
+          setPointsOfInterest(data.points);
+          console.warn(pointsOfInterest)
+        } catch (error) {
+          console.error('Error fetching points:', error);
+        }
+      };
+  
+      // Captura quando o usuário move ou altera o zoom do mapa
+      map.on("moveend", handleMoveEnd);
+  
+      // Limpar o evento quando o componente for desmontado
+      return () => {
+        map.off("moveend", handleMoveEnd);
+      };
+    }
+  }, [mapRef.current]);
 
   // Renderiza uma mensagem de erro caso ocorra.
   if (error) {
@@ -93,17 +125,7 @@ function Map() {
         <Marker
           position={[location.latitude, location.longitude]}
           icon={leafletIcon}
-          eventHandlers={{
-            click: () => {
-              console.warn("Clicou")
-            },
-          }}
-        >
-          {/* <Popup>
-            <p>Popup</p>
-          </Popup> */}
-        </Marker>
-        {/* <ErrorNotification message="B" onClose="A"></ErrorNotification> */}
+        />
         {pointsOfInterest.map((poi) => (
           <Marker
             key={poi.id}
