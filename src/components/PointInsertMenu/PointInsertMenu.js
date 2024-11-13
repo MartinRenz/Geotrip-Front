@@ -76,6 +76,7 @@ function PointInsertMenu({ isOpen, onClose, onConfirm }) {
     return isOpen ? (
         <div className="pointInsertMenuOverlay" onClick={onClose}>
             <div className="pointInsertMenuContainer" onClick={(e) => e.stopPropagation()}>
+                <button onClick={onClose} class="pointInsertcloseButton">✕</button>
                 <input
                     type="text"
                     placeholder="Enter Point Name"

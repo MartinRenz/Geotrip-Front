@@ -58,6 +58,6 @@ input.confirmRegisterButton {
     cursor: pointer;
 }
 
-input.registerButton:hover {
+input.confirmRegisterButton:hover {
     background-color: #FFF4DF;
 }

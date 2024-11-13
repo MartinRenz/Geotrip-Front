@@ -37,7 +37,7 @@ function SearchBar({ pointsOfInterest, onSearch }) {
     <div className="search-bar-container">
       <input 
         type="text" 
-        placeholder="Buscar por pontos de interesse..." 
+        placeholder="Search for points..." 
         className="search-bar-input" 
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}

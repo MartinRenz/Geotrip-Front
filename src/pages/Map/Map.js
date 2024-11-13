@@ -127,13 +127,6 @@ function Map() {
           </Marker>
         ))}
       </MapContainer>
-      {selectedPoint && (
-        <PointMenu
-          point={selectedPoint}
-          onClose={() => setSelectedPoint(null)}
-          isOwner={HandleIsPointOwner(selectedPoint)}
-        />
-      )}
       <Icon
         bottom="20px"
         left="20px"
@@ -148,6 +141,13 @@ function Map() {
         iconType="PointIcon"
         flexDirection="row-reverse"
       />
+      {selectedPoint && (
+        <PointMenu
+          point={selectedPoint}
+          onClose={() => setSelectedPoint(null)}
+          isOwner={HandleIsPointOwner(selectedPoint)}
+        />
+      )}
     </div>
   );
 }

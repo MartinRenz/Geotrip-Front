@@ -19,8 +19,8 @@ function PointMenu({ point, onClose, isOwner }) {
                     <button onClick={onClose} class="closeButton">✕</button>
                     {isOwner && (<button onClick={HandleDeleteButton} class="deleteButton">🗑️</button>)}
                     <h3 style={{ textAlign: 'center' }}>{point.name}</h3>
-                    <img src={placeHolder} alt='gato makonha'>
-                    </img>
+                    {/* <img src={placeHolder} alt='gato makonha'>
+                    </img> */}
                 </div>
                 <div className="pointMenuContent">
                     <div className="pointMenuCheckInField">
