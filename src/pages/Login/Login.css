@@ -92,3 +92,8 @@ input.registerButton {
 input.registerButton:hover {
     background-color: #FFF4DF;
 }
+
+.infoMessage {
+    text-align: center;
+    font-size: small;
+}

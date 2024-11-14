@@ -49,6 +49,7 @@ function Register() {
             if(!email.trim() || !password.trim() || !confirmPassword.trim()) {
                 validateEmail();
                 validatePassword();
+                validateConfirmPassword();
                 return;
             }
             if(emailError != null || passwordError != null || confirmPasswordError) {
@@ -60,9 +61,14 @@ function Register() {
             setError(null);
             navigate("/map");
         } catch (err) {
-            setError(err.error || 'Something went wrong with the login.');
+            setError(err.error || 'Something went wrong with the register.');
             setMessage('');
         }
+    };
+
+    const handleLoginAccess = (e) => {
+        e.preventDefault();
+        navigate('/login');
     };
 
     return (
@@ -121,7 +127,7 @@ function Register() {
                     value="Sign up"
                     onClick={handleRegisterButton}
                 />
-                <p className="returnLoginMessage">Return to <a href="" onClick={navigate('/login')}>Login</a></p>
+                <p className="infoMessage">Return to <a href="#" onClick={handleLoginAccess}>Login</a></p>
             </div>
         </div>
     );

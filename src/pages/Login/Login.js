@@ -30,6 +30,11 @@ function Login() {
         setPasswordError(null)
     };
 
+    const handleMapAccess = (e) => {
+        e.preventDefault();
+        navigate('/map');
+    };
+
     async function HandleLoginButton() {
         try {
             if(!email.trim() || !password.trim()) {
@@ -101,6 +106,7 @@ function Login() {
                     value="Sign up"
                     onClick={HandleRegisterButton}
                 />
+                <p className="infoMessage"><a href="#" onClick={handleMapAccess}>Access without login</a></p>
             </div>
         </div>
     );

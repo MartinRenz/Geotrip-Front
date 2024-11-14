@@ -77,8 +77,7 @@ input.confirmRegisterButton:hover {
     background-color: #FFF4DF;
 }
 
-.returnLoginMessage {
+.infoMessage {
     text-align: center;
     font-size: small;
-    margin: 0
 }
