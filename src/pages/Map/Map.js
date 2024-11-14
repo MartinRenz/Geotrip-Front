@@ -7,10 +7,13 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import Icon from '../../components/Icon/Icon';
 import PointMenu from '../../components/PointMenu/PointMenu.js'
 import { getPointsByCoordinates } from '../../services/pointApi.js';  
+import { useLocation } from 'react-router-dom';
 import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
 
 function Map() {
+  const locationData = useLocation();
+  const { userId } = locationData.state || {};
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
@@ -108,6 +111,8 @@ function Map() {
   if (error) {
     return <div>{error}</div>;
   }
+
+  console.warn("userId", userId)
 
   return (
     <div style={{ position: "relative", height: "100vh", width: "100vw" }}>

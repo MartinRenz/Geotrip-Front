@@ -32,7 +32,7 @@ function Login() {
 
     const handleMapAccess = (e) => {
         e.preventDefault();
-        navigate('/map');
+        navigate('/map', { state: { userId: null } });
     };
 
     async function HandleLoginButton() {
@@ -48,7 +48,7 @@ function Login() {
             const data = await loginUser(email, password);
             setMessage(data.message);
             setError(null);
-            navigate("/map");
+            navigate("/map", { state: { userId: data.userId } });
         } catch (err) {
             setError(err.error || 'Something went wrong with the login.');
             setMessage('');

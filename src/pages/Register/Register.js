@@ -59,7 +59,7 @@ function Register() {
             const data = await createUser(username, email, password);
             setMessage(data.message);
             setError(null);
-            navigate("/map");
+            navigate("/map", { state: { userId: data.userId } });
         } catch (err) {
             setError(err.error || 'Something went wrong with the register.');
             setMessage('');
