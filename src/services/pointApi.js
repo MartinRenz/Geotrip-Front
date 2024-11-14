@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/points';
+const API_URL = 'https://geotrip-api.onrender.com/points';
 
 export const getPointById = async (id) => {
   try {

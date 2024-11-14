@@ -1,7 +1,7 @@
 // src/api/userApi.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/users';
+const API_URL = 'https://geotrip-api.onrender.com/users';
 
 export const loginUser = async (email, password) => {
   try {
