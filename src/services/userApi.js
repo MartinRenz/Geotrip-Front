@@ -13,7 +13,7 @@ export const loginUser = async (email, password) => {
       throw error.response.data;
     } else if (error.request) {
       console.error('No response received:', error.request);
-      throw { error: 'No response from server' };
+      throw { error: 'No response from server.' };
     } else {
       console.error('Error setting up request:', error.message);
       throw { error: error.message };
@@ -31,7 +31,7 @@ export const createUser = async (username, email, password) => {
       throw error.response.data;
     } else if (error.request) {
       console.error('No response received:', error.request);
-      throw { error: 'No response from server' };
+      throw { error: 'No response from server.' };
     } else {
       console.error('Error setting up request:', error.message);
       throw { error: error.message };

@@ -10,15 +10,50 @@ function Register() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(null);
+    const [emailError, setEmailError] = useState(null);
+    const [passwordError, setPasswordError] = useState(null);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(null);
     const [message, setMessage] = useState("");
 
-    const handleRegisterButton = async () => {
-        if (password !== confirmPassword) {
-            setError("Passwords do not match.");
+    const validateEmail = () => {
+        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const isValidEmail = !regex.test(email)
+            ? "E-mail is in an invalid format."
+            : null;
+
+        setEmailError(isValidEmail)
+    };
+
+    const validatePassword = () => {
+        if (password.length <= 3) {
+            setPasswordError("Password is in an invalid format, and must be longer than 3 characters.")
             return;
         }
+        setPasswordError(null)
+    };
 
+    const validateConfirmPassword = () => {
+        if (confirmPassword.length <= 3) {
+            setConfirmPasswordError("Password is in an invalid format, and must be longer than 3 characters.")
+            return;
+        }
+        if (password !== confirmPassword) {
+            setConfirmPasswordError("Passwords do not match.");
+            return;
+        }
+        setConfirmPasswordError(null)
+    };
+
+    const handleRegisterButton = async () => {
         try {
+            if(!email.trim() || !password.trim() || !confirmPassword.trim()) {
+                validateEmail();
+                validatePassword();
+                return;
+            }
+            if(emailError != null || passwordError != null || confirmPasswordError) {
+                return;
+            }
             const username = email;
             const data = await createUser(username, email, password);
             setMessage(data.message);
@@ -41,7 +76,14 @@ function Register() {
                     placeholder="E-mail"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onBlur={validateEmail}
+                    onFocus={() => setEmailError(null)}
+                    style={{
+                        borderColor: emailError == null ? 'transparent' : 'red',
+                    }}
+                    required
                 />
+                <p className="errorInput">{emailError}</p>
                 <input
                     type="password"
                     id="password"
@@ -49,7 +91,14 @@ function Register() {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onBlur={validatePassword}
+                    onFocus={() => setPasswordError(null)}
+                    style={{
+                        borderColor: passwordError == null ? 'transparent' : 'red',
+                    }}
+                    required
                 />
+                <p className="errorInput">{passwordError}</p>
                 <input
                     type="password"
                     id="confirmPassword"
@@ -57,7 +106,14 @@ function Register() {
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    onBlur={validateConfirmPassword}
+                    onFocus={() => setConfirmPasswordError(null)}
+                    style={{
+                        borderColor: confirmPasswordError == null ? 'transparent' : 'red',
+                    }}
+                    required
                 />
+                <p className="errorInput">{confirmPasswordError}</p>
                 <p className="errorMessage">{error}</p>
                 <input
                     type="button"
@@ -65,6 +121,7 @@ function Register() {
                     value="Sign up"
                     onClick={handleRegisterButton}
                 />
+                <p className="returnLoginMessage">Return to <a href="" onClick={navigate('/login')}>Login</a></p>
             </div>
         </div>
     );

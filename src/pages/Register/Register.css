@@ -46,6 +46,13 @@ select {
     box-sizing: border-box;
 }
 
+.errorInput {
+    text-align: left;
+    color: rgb(255, 29, 29);
+    font-size: x-small;
+    margin: 0
+}
+
 .errorMessage {
     text-align: center;
     color: rgb(255, 29, 29);
@@ -68,4 +75,10 @@ input.confirmRegisterButton {
 
 input.confirmRegisterButton:hover {
     background-color: #FFF4DF;
+}
+
+.returnLoginMessage {
+    text-align: center;
+    font-size: small;
+    margin: 0
 }
