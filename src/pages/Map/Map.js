@@ -26,9 +26,11 @@ function Map() {
   };
 
   function HandleIsPointOwner(point) {
-    // TODO: CHECAR ID DO USUARIO SE EH IGUAL A ID DO PONTO SELECIONADO
-    // RETORNAR TRUE SE SIM
-    return true;
+    console.warn(point)
+    if(point.user_id == userId)
+      return true;
+
+    return false;
   }
 
   // Atualiza a localização do usuário.
@@ -148,9 +150,6 @@ function Map() {
               }
             }}
           >
-            <Popup>
-              <p>{poi.name}</p>
-            </Popup>
           </Marker>
         ))}
       </MapContainer>
@@ -160,6 +159,7 @@ function Map() {
         icon={uIcon}
         iconType="ProfileIcon"
         flexDirection="row"
+        userId={userId}
       />
       <Icon
         bottom="20px"
@@ -167,6 +167,7 @@ function Map() {
         icon={geoTripIcon}
         iconType="PointIcon"
         flexDirection="row-reverse"
+        userId={userId}
       />
       {selectedPoint && (
         <PointMenu

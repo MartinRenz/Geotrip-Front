@@ -8,7 +8,7 @@ import pointNewIcon from '../../../src/assets/icons/point-new-icon.png';
 import stampGalleryIcon from '../../../src/assets/icons/stamp-gallery-icon.png';
 import PointInsertMenu from '../PointInsertMenu/PointInsertMenu';
 
-function Icon({ bottom, left, right, icon, iconType, flexDirection }) {
+function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPointInsertOpen, setIsPointInsertOpen] = useState(false);
   const containerRef = useRef(null);
@@ -85,6 +85,7 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection }) {
           onConfirm={(pointData) => {
             window.alert('Point created!');
           }}
+          userId={userId}
         />
       )}
     </>

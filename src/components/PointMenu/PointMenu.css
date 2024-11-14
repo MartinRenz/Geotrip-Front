@@ -16,8 +16,7 @@
 
 .pointMenuContainer {
     position: relative;
-    min-width: 300px;
-    max-width: 540px;
+    max-width: 300px;
     width: 100%;
     flex-grow: 0;
 }
@@ -85,7 +84,7 @@
     background-color: #e04e4e;
 }
 
-.deleteButton { 
+/* .deleteButton {
     position: absolute;
     top: -10px;
     left: -10px;
@@ -102,7 +101,7 @@
     font-size: 24px;
     font-weight: bold;
     line-height: 0;
-}
+} */
 
 .deleteButton:hover {
     background-color: #ff4040;
@@ -134,11 +133,27 @@
     border-radius: 10px;
     border-color: #FD7B03;
     background-color: #FD7B03;
+    color: white;
     font-weight: bolder;
     font-size: larger;
 }
 
+.deleteButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #FD7B03;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: #FFa652;
+}
+
 .pointMenuCheckInField button:hover {
+    cursor: pointer;
     background-color: #FFa652;
 }
 

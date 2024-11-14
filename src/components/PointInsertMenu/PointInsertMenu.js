@@ -5,8 +5,10 @@ import 'leaflet/dist/leaflet.css';
 import { createPointOfInterest } from '../../services/pointApi.js'
 import './PointInsertMenu.css';
 
-function PointInsertMenu({ isOpen, onClose, onConfirm }) {
+function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
     const [pointName, setPointName] = useState('');
+    const [pointNameError, setPointNameError] = useState(null);
+    const [pointDescription, setPointDesc] = useState('');
     const [error, setError] = useState(null);
     const [selectedPosition, setSelectedPosition] = useState(null);
     const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
@@ -66,35 +68,61 @@ function PointInsertMenu({ isOpen, onClose, onConfirm }) {
     }, [onClose]);
 
     const handleConfirm = async () => {
-        if (selectedPosition && pointName.trim() !== '') {
+        if(userId === null || userId === undefined) {
+            setError('This option is only available to users logged in to the platform.');
+            return;
+        }
+        if (selectedPosition && pointName.trim() !== '' && pointDescription.trim() !== '') {
             try {
                 const response = await createPointOfInterest({ 
-                    name: pointName, 
+                    name: pointName,
+                    description: pointDescription,
                     latitude: selectedPosition.lat, 
                     longitude: selectedPosition.lng,
-                    userId: 1
+                    userId: userId
                 });
-                onConfirm({ name: pointName, position: selectedPosition });
+                //onConfirm({ name: pointName, position: selectedPosition });
                 onClose();
             } catch (error) {
-                alert('Error creating point of interest. Please try again.');
+                setError('Error creating point of interest. Please try again.');
             }
         } else {
-            alert('Please provide a name and select a point on the map.');
+            setError('Please provide a name, description, and select a point on the map.');
         }
-    };    
+    };
+
+    const validatePointName = () => {
+        console.warn(pointName)
+        if (pointName.length <= 5) {
+            setPointNameError("Name is in an invalid format, and must be longer than 5 characters.")
+            return;
+        }
+        setPointNameError(null)
+    };
 
     return isOpen ? (
         <div className="pointInsertMenuOverlay" onClick={onClose}>
             <div className="pointInsertMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} class="pointInsertcloseButton">✕</button>
+                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>Create Point</h3>
                 <input
                     type="text"
-                    placeholder="Enter Point Name"
+                    placeholder="Name"
                     value={pointName}
                     onChange={(e) => setPointName(e.target.value)}
+                    maxLength={40}
+                    required
                     className="pointMenuInput"
                 />
+                <textarea
+                    placeholder="Description"
+                    value={pointDescription}
+                    onChange={(e) => setPointDesc(e.target.value)}
+                    maxLength={140}
+                    required
+                    className="pointMenuTextarea"
+                />
+                <p className="errorInput">{pointNameError}</p>
                 <div className="miniMapContainer">
                     <MapContainer
                         ref={mapRef}
@@ -116,6 +144,7 @@ function PointInsertMenu({ isOpen, onClose, onConfirm }) {
                         <MapClickHandler />
                     </MapContainer>
                 </div>
+                <p className="errorMessage">{error}</p>
                 <button className="confirmButton" onClick={handleConfirm}>
                     Confirm
                 </button>
