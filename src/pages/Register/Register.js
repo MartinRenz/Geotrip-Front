@@ -25,7 +25,7 @@ function Register() {
             setError(null);
             navigate("/map");
         } catch (err) {
-            setError(err.error || 'Something went wrong');
+            setError(err.error || 'Something went wrong with the login.');
             setMessage('');
         }
     };
@@ -34,33 +34,31 @@ function Register() {
         <div className="registerContainer">
             <img src={logo} className="logo" alt="GeoTrip logo" />
             <div>
-                <label htmlFor="email"> E-mail </label>
                 <input
                     type="text"
                     id="email"
                     name="email"
-                    placeholder="Your e-mail"
+                    placeholder="E-mail"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <label htmlFor="password"> Password </label>
                 <input
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="Your password"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <label htmlFor="confirmPassword"> Confirm Password </label>
                 <input
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
-                    placeholder="Confirm your password"
+                    placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
+                <p className="errorMessage">{error}</p>
                 <input
                     type="button"
                     className="confirmRegisterButton"
@@ -68,9 +66,6 @@ function Register() {
                     onClick={handleRegisterButton}
                 />
             </div>
-
-            {error && <div style={{ color: 'red', textAlign: 'center' }}>{error}</div>}
-            {message && <div style={{ color: 'green', textAlign: 'center' }}>{message}</div>}
         </div>
     );
 }

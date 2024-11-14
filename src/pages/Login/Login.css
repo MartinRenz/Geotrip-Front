@@ -1,5 +1,6 @@
 body {
-    background-color: #ffcd90;
+    background: rgb(255, 177, 82);
+    background: linear-gradient(90deg, rgba(255, 177, 82, 1) 0%, rgba(255, 205, 144, 1) 100%);
     display: flex;
     justify-content: center;
     width: 100vw;
@@ -43,6 +44,20 @@ select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.errorInput {
+    text-align: left;
+    color: rgb(255, 29, 29);
+    font-size: x-small;
+    margin: 0
+}
+
+.errorMessage {
+    text-align: center;
+    color: rgb(255, 29, 29);
+    font-size: small;
+    margin: 0
 }
 
 input.loginButton {
