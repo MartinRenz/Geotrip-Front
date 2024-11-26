@@ -6,6 +6,7 @@ import editProfileIcon from '../../../src/assets/icons/edit-profile-icon.png';
 import pointHistoryIcon from '../../../src/assets/icons/point-history-icon.png';
 import pointNewIcon from '../../../src/assets/icons/point-new-icon.png';
 import stampGalleryIcon from '../../../src/assets/icons/stamp-gallery-icon.png';
+import logOutIcon from '../../../src/assets/icons/log-out-icon.png';
 import PointInsertMenu from '../PointInsertMenu/PointInsertMenu';
 
 function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
@@ -24,6 +25,7 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
     { icon: settingsIcon, component: null, name: 'Settings' },
     { icon: editProfileIcon, component: null, name: 'Edit' },
     { icon: stampGalleryIcon, component: null, name: 'Stamps' },
+    { icon: logOutIcon, component: null, name: 'Log-out' },
   ];
 
   const pointMenuItems = [
