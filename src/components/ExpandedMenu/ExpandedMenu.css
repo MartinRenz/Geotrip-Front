@@ -4,6 +4,11 @@
     justify-content: center;
 }
 
+.expandedMenuIconContainer {
+    position: relative; 
+    text-align: center;
+}
+
 .icon:hover {
     transform: scale(1.1);
     transition: transform 0.2s;

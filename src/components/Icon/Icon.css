@@ -19,3 +19,18 @@
   transform: scale(1.1);
   transition: transform 0.2s;
 }
+
+.icon-name {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2px 5px;
+  font-size: 12px;
+  color: #333;
+  border: 5px;
+  border-radius: 20%;
+  white-space: nowrap;
+}

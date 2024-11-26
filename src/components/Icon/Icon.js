@@ -21,14 +21,14 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
   };
 
   const profileMenuItems = [
-    { icon: settingsIcon, component: null },
-    { icon: editProfileIcon, component: null },
-    { icon: stampGalleryIcon, component: null },
+    { icon: settingsIcon, component: null, name: 'Settings' },
+    { icon: editProfileIcon, component: null, name: 'Edit' },
+    { icon: stampGalleryIcon, component: null, name: 'Stamps' },
   ];
 
   const pointMenuItems = [
-    { icon: pointNewIcon, component: 'PointInsertMenu' }, // Identifying it for handling
-    { icon: pointHistoryIcon, component: null },
+    { icon: pointNewIcon, component: 'PointInsertMenu', name: 'Insert' }, // Identifying it for handling
+    { icon: pointHistoryIcon, component: null, name: 'History' },
   ];
 
   function handleExpandIcon() {
@@ -57,12 +57,15 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
   return (
     <>
       <div className="icon-container" style={containerStyle} ref={containerRef}>
+        {!isExpanded &&
+          (<div className="icon-name">{iconType === 'ProfileIcon' ? 'Profile' : 'Points'}</div>)}
         <img
           src={icon}
           alt="User Icon"
           className="icon"
           onClick={handleExpandIcon}
         />
+
         {isExpanded && iconType === 'ProfileIcon' && (
           <ExpandedMenu
             items={profileMenuItems}

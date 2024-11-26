@@ -162,11 +162,11 @@ function Map() {
         userId={userId}
       />
       <Icon
-        bottom="20px"
-        right="20px"
+        bottom="100px"
+        left="20px"
         icon={geoTripIcon}
         iconType="PointIcon"
-        flexDirection="row-reverse"
+        flexDirection="row"
         userId={userId}
       />
       {selectedPoint && (
