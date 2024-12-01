@@ -13,6 +13,9 @@ function Login() {
     const [passwordError, setPasswordError] = useState(null);
     const [message, setMessage] = useState("");
 
+    const maxEmailLength = 80;
+    const maxPasswordLength = 20;
+
     const validateEmail = () => {
         const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const isValidEmail = !regex.test(email)
@@ -24,7 +27,7 @@ function Login() {
 
     const validatePassword = () => {
         if (password.length <= 3) {
-            setPasswordError("Password is in an invalid format, and must be longer than 3 characters.")
+            setPasswordError("Password is in an invalid format, and must have between 4 and 20 characters.")
             return;
         }
         setPasswordError(null)
@@ -37,12 +40,12 @@ function Login() {
 
     async function HandleLoginButton() {
         try {
-            if(!email.trim() || !password.trim()) {
+            if (!email.trim() || !password.trim()) {
                 validateEmail();
                 validatePassword();
                 return;
             }
-            if(emailError != null || passwordError != null) {
+            if (emailError != null || passwordError != null) {
                 return;
             }
             const data = await loginUser(email, password);
@@ -69,7 +72,10 @@ function Login() {
                     name="email"
                     placeholder="E-mail"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) =>
+                        e.target.value.length <= maxEmailLength &&
+                        setEmail(e.target.value)
+                    }
                     onBlur={validateEmail}
                     onFocus={() => setEmailError(null)}
                     style={{
@@ -84,7 +90,10 @@ function Login() {
                     name="password"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) =>
+                        e.target.value.length <= maxPasswordLength &&
+                        setPassword(e.target.value)
+                    }
                     onBlur={validatePassword}
                     onFocus={() => setPasswordError(null)}
                     style={{

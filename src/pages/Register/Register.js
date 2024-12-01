@@ -15,6 +15,9 @@ function Register() {
     const [confirmPasswordError, setConfirmPasswordError] = useState(null);
     const [message, setMessage] = useState("");
 
+    const maxEmailLength = 80;
+    const maxPasswordLength = 20;
+
     const validateEmail = () => {
         const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const isValidEmail = !regex.test(email)
@@ -26,7 +29,7 @@ function Register() {
 
     const validatePassword = () => {
         if (password.length <= 3) {
-            setPasswordError("Password is in an invalid format, and must be longer than 3 characters.")
+            setPasswordError("Password is in an invalid format, and must have between 4 and 20 characters.")
             return;
         }
         setPasswordError(null)
@@ -34,7 +37,7 @@ function Register() {
 
     const validateConfirmPassword = () => {
         if (confirmPassword.length <= 3) {
-            setConfirmPasswordError("Password is in an invalid format, and must be longer than 3 characters.")
+            setConfirmPasswordError("Password is in an invalid format, and must have between 4 and 20 characters.")
             return;
         }
         if (password !== confirmPassword) {
@@ -46,13 +49,13 @@ function Register() {
 
     const handleRegisterButton = async () => {
         try {
-            if(!email.trim() || !password.trim() || !confirmPassword.trim()) {
+            if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
                 validateEmail();
                 validatePassword();
                 validateConfirmPassword();
                 return;
             }
-            if(emailError != null || passwordError != null || confirmPasswordError) {
+            if (emailError != null || passwordError != null || confirmPasswordError) {
                 return;
             }
             const username = email;
@@ -81,7 +84,10 @@ function Register() {
                     name="email"
                     placeholder="E-mail"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={
+                        (e) => e.target.value.length <= maxEmailLength &&
+                            setEmail(e.target.value)
+                    }
                     onBlur={validateEmail}
                     onFocus={() => setEmailError(null)}
                     style={{
@@ -96,7 +102,10 @@ function Register() {
                     name="password"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={
+                        (e) => e.target.value.length <= maxPasswordLength &&
+                            setPassword(e.target.value)
+                    }
                     onBlur={validatePassword}
                     onFocus={() => setPasswordError(null)}
                     style={{
@@ -111,7 +120,10 @@ function Register() {
                     name="confirmPassword"
                     placeholder="Confirm Password"
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={
+                        (e) => e.target.value.length <= maxPasswordLength &&
+                            setConfirmPassword(e.target.value)
+                    }
                     onBlur={validateConfirmPassword}
                     onFocus={() => setConfirmPasswordError(null)}
                     style={{

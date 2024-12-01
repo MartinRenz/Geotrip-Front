@@ -8,8 +8,10 @@ import pointNewIcon from '../../../src/assets/icons/point-new-icon.png';
 import stampGalleryIcon from '../../../src/assets/icons/stamp-gallery-icon.png';
 import logOutIcon from '../../../src/assets/icons/log-out-icon.png';
 import PointInsertMenu from '../PointInsertMenu/PointInsertMenu';
+import { useNavigate } from 'react-router-dom';
 
 function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPointInsertOpen, setIsPointInsertOpen] = useState(false);
   const containerRef = useRef(null);
@@ -25,13 +27,17 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
     { icon: settingsIcon, component: null, name: 'Settings' },
     { icon: editProfileIcon, component: null, name: 'Edit' },
     { icon: stampGalleryIcon, component: null, name: 'Stamps' },
-    { icon: logOutIcon, component: null, name: 'Log-out' },
+    { icon: logOutIcon, component: 'LogoutButton', name: 'Log-out' },
   ];
 
   const pointMenuItems = [
     { icon: pointNewIcon, component: 'PointInsertMenu', name: 'Insert' }, // Identifying it for handling
     { icon: pointHistoryIcon, component: null, name: 'History' },
   ];
+
+  const handleLogout = (e) => {
+    navigate('/login',  { state: { userId: null } });
+  }
 
   function handleExpandIcon() {
     setIsExpanded((prev) => !prev);
@@ -42,6 +48,11 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId }) {
       setIsPointInsertOpen(true);
       setIsExpanded(false); // Close the expanded menu
     }
+
+    if (item.component === 'LogoutButton') {
+      handleLogout();
+    }
+
   }
 
   useEffect(() => {
