@@ -10,6 +10,7 @@ import { getPointsByCoordinates } from '../../services/pointApi.js';
 import { useLocation } from 'react-router-dom';
 import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
+import createCustomIcon from "../../components/LeafletIcon/LeafletIcon.js";
 
 function Map() {
   const locationData = useLocation();
