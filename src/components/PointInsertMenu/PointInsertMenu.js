@@ -87,7 +87,8 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
                     description: pointDescription,
                     latitude: selectedPosition.lat,
                     longitude: selectedPosition.lng,
-                    userId: userId
+                    userId: userId,
+                    color: currentColor
                 });
                 //onConfirm({ name: pointName, position: selectedPosition });
                 onClose();

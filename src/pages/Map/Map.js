@@ -137,7 +137,7 @@ function Map() {
           <Marker
             key={poi.id}
             position={[poi.latitude, poi.longitude]}
-            icon={createCustomIcon()}
+            icon={createCustomIcon(poi.color)}
             eventHandlers={{
               click: () => {
                 setSelectedPoint(poi);

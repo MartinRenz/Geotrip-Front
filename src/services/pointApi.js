@@ -56,14 +56,15 @@ export const getPointsByCoordinates = async ({northEast, southWest}) => {
   }
 };
 
-export const createPointOfInterest = async ({name, description, latitude, longitude, userId}) => {
+export const createPointOfInterest = async ({name, description, latitude, longitude, userId, color}) => {
   try {
     const response = await axios.post(`${API_URL}/`, { 
       name,
       description,
       latitude, 
       longitude, 
-      user_id: userId 
+      user_id: userId,
+      color,
     });
     return response.data;
   } catch (error) {
