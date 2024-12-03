@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import leafletIcon from "../../components/LeafletIcon/LeafletIcon.js";
 import uIcon from '../../assets/icons/user-icon.png'
 import geoTripIcon from '../../assets/icons/geo-trip-icon.png'
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -132,13 +131,13 @@ function Map() {
         />
         <Marker
           position={[location.latitude, location.longitude]}
-          icon={leafletIcon}
+          icon={createCustomIcon()}
         />
         {pointsOfInterest.map((poi) => (
           <Marker
             key={poi.id}
             position={[poi.latitude, poi.longitude]}
-            icon={leafletIcon}
+            icon={createCustomIcon()}
             eventHandlers={{
               click: () => {
                 setSelectedPoint(poi);

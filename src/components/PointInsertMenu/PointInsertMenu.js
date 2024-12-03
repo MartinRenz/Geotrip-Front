@@ -1,22 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import leafletIcon from "../LeafletIcon/LeafletIcon.js";
+import createCustomIcon from "../LeafletIcon/LeafletIcon.js"
 import 'leaflet/dist/leaflet.css';
 import { createPointOfInterest } from '../../services/pointApi.js'
 import './PointInsertMenu.css';
+import { HuePicker } from 'react-color';
 
 function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
     const [pointName, setPointName] = useState('');
     const [pointNameError, setPointNameError] = useState(null);
     const [pointDescription, setPointDesc] = useState('');
     const [error, setError] = useState(null);
-    const [selectedPosition, setSelectedPosition] = useState(null);
     const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+    const [selectedPosition, setSelectedPosition] = useState(null);
     const mapRef = useRef(null);
+    const [currentColor, setCurrentColor] = useState("#FD7B03");
+    const handleOnColorChangeComplete = (color) => {
+        setCurrentColor(color.hex)
+    }
 
     function MapClickHandler() {
         useMapEvents({
             click(e) {
+                mapRef.current.setView([location.latitude, location.longitude], 18);
                 setSelectedPosition(e.latlng);
             },
         });
@@ -27,10 +33,12 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    setLocation({
+                    const userLocation = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
-                    });
+                    };
+                    setLocation(userLocation);
+                    setSelectedPosition([userLocation.latitude, userLocation.longitude]);
                 },
                 (error) => {
                     setError("Erro ao obter localização do usuário.");
@@ -68,16 +76,16 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
     }, [onClose]);
 
     const handleConfirm = async () => {
-        if(userId === null || userId === undefined) {
+        if (userId === null || userId === undefined) {
             setError('This option is only available to users logged in to the platform.');
             return;
         }
         if (selectedPosition && pointName.trim() !== '' && pointDescription.trim() !== '') {
             try {
-                const response = await createPointOfInterest({ 
+                const response = await createPointOfInterest({
                     name: pointName,
                     description: pointDescription,
-                    latitude: selectedPosition.lat, 
+                    latitude: selectedPosition.lat,
                     longitude: selectedPosition.lng,
                     userId: userId
                 });
@@ -123,6 +131,14 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
                     className="pointMenuTextarea"
                 />
                 <p className="errorInput">{pointNameError}</p>
+
+                <HuePicker
+                    color={currentColor}
+                    onChangeComplete={handleOnColorChangeComplete}
+                    disableAlpha={"true"}
+                    width="auto">
+                </HuePicker>
+
                 <div className="miniMapContainer">
                     <MapContainer
                         ref={mapRef}
@@ -139,7 +155,10 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
                             attribution="&copy; OpenStreetMap contributors"
                         />
                         {selectedPosition && (
-                            <Marker position={selectedPosition} icon={leafletIcon} />
+                            <Marker
+                                position={selectedPosition} 
+                                icon={createCustomIcon(currentColor)} 
+                            />
                         )}
                         <MapClickHandler />
                     </MapContainer>

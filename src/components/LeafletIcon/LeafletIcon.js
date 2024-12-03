@@ -37,5 +37,4 @@ function createCustomIcon(color = "#FD7B03") {
   });
 }
 
-const leafletIcon = createCustomIcon();
-export default leafletIcon;
+export default createCustomIcon;
