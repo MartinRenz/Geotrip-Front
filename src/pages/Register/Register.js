@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { createUser } from "../../services/userApi";
 import logo from "../../assets/icons/logo.png";
 import "./Register.css";
+import Spinner from "../../components/Spinner/Spinner";
 
 function Register() {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -49,22 +51,27 @@ function Register() {
 
     const handleRegisterButton = async () => {
         try {
+            setIsLoading(true);
             if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
                 validateEmail();
                 validatePassword();
                 validateConfirmPassword();
+                setIsLoading(false);
                 return;
             }
             if (emailError != null || passwordError != null || confirmPasswordError) {
+                setIsLoading(false);
                 return;
             }
             const username = email;
             const data = await createUser(username, email, password);
             setMessage(data.message);
             setError(null);
+            setIsLoading(false);
             navigate("/map", { state: { userId: data.userId } });
         } catch (err) {
             setError(err.error || 'Something went wrong with the register.');
+            setIsLoading(false);
             setMessage('');
         }
     };
@@ -133,12 +140,13 @@ function Register() {
                 />
                 <p className="errorInput">{confirmPasswordError}</p>
                 <p className="errorMessage">{error}</p>
-                <input
-                    type="button"
-                    className="confirmRegisterButton"
-                    value="Sign up"
+                <button
+                    className={`confirmRegisterButton ${isLoading ? "loading" : ""}`}
                     onClick={handleRegisterButton}
-                />
+                    disabled={isLoading}
+                >
+                    {isLoading ? <Spinner color={"#FD7B03"}/> : "Sign up"}
+                </button>
                 <p className="infoMessage">Return to <a href="#" onClick={handleLoginAccess}>Login</a></p>
             </div>
         </div>
