@@ -3,19 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/userApi";
 import logo from "../../assets/icons/logo.png";
 import "./Login.css";
+import Spinner from "../../components/Spinner/Spinner";
 
 function Login() {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(null);
     const [emailError, setEmailError] = useState(null);
+    const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState(null);
-    const [message, setMessage] = useState("");
+    const [error, setError] = useState(null);
 
-    const maxEmailLength = 80;
-    const maxPasswordLength = 20;
-
+    // Validates email formatting using a REGEX.
     const validateEmail = () => {
         const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const isValidEmail = !regex.test(email)
@@ -25,8 +24,9 @@ function Login() {
         setEmailError(isValidEmail)
     };
 
+    // Validates password formatting.
     const validatePassword = () => {
-        if (password.length <= 3) {
+        if (password.length <= 3 || password.length > 20) {
             setPasswordError("Password is in an invalid format, and must have between 4 and 20 characters.")
             return;
         }
@@ -38,27 +38,31 @@ function Login() {
         navigate('/map', { state: { userId: null } });
     };
 
-    async function HandleLoginButton() {
+    const handleLoginButton = async () => {
         try {
+            setIsLoading(true);
             if (!email.trim() || !password.trim()) {
                 validateEmail();
                 validatePassword();
+                setIsLoading(false);
                 return;
             }
             if (emailError != null || passwordError != null) {
+                setIsLoading(false);
                 return;
             }
+
             const data = await loginUser(email, password);
-            setMessage(data.message);
             setError(null);
+            setIsLoading(false);
             navigate("/map", { state: { userId: data.userId } });
         } catch (err) {
+            setIsLoading(false);
             setError(err.error || 'Something went wrong with the login.');
-            setMessage('');
         }
     }
 
-    function HandleRegisterButton() {
+    const handleRegisterButton = () => {
         navigate("/register");
     }
 
@@ -72,15 +76,14 @@ function Login() {
                     name="email"
                     placeholder="E-mail"
                     value={email}
-                    onChange={(e) =>
-                        e.target.value.length <= maxEmailLength &&
-                        setEmail(e.target.value)
-                    }
+                    onChange={(e) => setEmail(e.target.value)}
                     onBlur={validateEmail}
                     onFocus={() => setEmailError(null)}
                     style={{
                         borderColor: emailError == null ? 'transparent' : 'red',
                     }}
+                    maxlength={30}
+                    disabled={isLoading}
                     required
                 />
                 <p className="errorInput">{emailError}</p>
@@ -90,31 +93,32 @@ function Login() {
                     name="password"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) =>
-                        e.target.value.length <= maxPasswordLength &&
-                        setPassword(e.target.value)
-                    }
+                    onChange={(e) => setPassword(e.target.value)}
                     onBlur={validatePassword}
                     onFocus={() => setPasswordError(null)}
                     style={{
                         borderColor: passwordError == null ? 'transparent' : 'red',
                     }}
+                    maxlength={20}
+                    disabled={isLoading}
                     required
                 />
                 <p className="errorInput">{passwordError}</p>
                 <p className="errorMessage">{error}</p>
-                <input
-                    type="button"
-                    className="loginButton"
-                    value="Sign in"
-                    onClick={HandleLoginButton}
-                />
-                <input
-                    type="button"
-                    className="registerButton"
-                    value="Sign up"
-                    onClick={HandleRegisterButton}
-                />
+                <button
+                    className={`loginButton ${isLoading ? "loading" : ""}`}
+                    onClick={handleLoginButton}
+                    disabled={isLoading}
+                >
+                    {isLoading ? <Spinner/> : "Sign in"}
+                </button>
+                <button
+                    className={"registerButton"}
+                    onClick={handleRegisterButton}
+                    disabled={isLoading}
+                >
+                    {"Sign up"}
+                </button>
                 <p className="infoMessage"><a href="#" onClick={handleMapAccess}>Access without login</a></p>
             </div>
         </div>
