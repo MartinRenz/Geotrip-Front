@@ -82,9 +82,13 @@ function Login() {
                     style={{
                         borderColor: emailError == null ? 'transparent' : 'red',
                     }}
-                    maxlength={30}
+                    maxLength={30}
                     disabled={isLoading}
                     required
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter")
+                            handleLoginButton();
+                    }}
                 />
                 <p className="errorInput">{emailError}</p>
                 <input
@@ -99,9 +103,13 @@ function Login() {
                     style={{
                         borderColor: passwordError == null ? 'transparent' : 'red',
                     }}
-                    maxlength={20}
+                    maxLength={20}
                     disabled={isLoading}
                     required
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter")
+                            handleLoginButton();
+                    }}
                 />
                 <p className="errorInput">{passwordError}</p>
                 <p className="errorMessage">{error}</p>
@@ -110,7 +118,7 @@ function Login() {
                     onClick={handleLoginButton}
                     disabled={isLoading}
                 >
-                    {isLoading ? <Spinner/> : "Sign in"}
+                    {isLoading ? <Spinner /> : "Sign in"}
                 </button>
                 <button
                     className={"registerButton"}

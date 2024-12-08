@@ -2,6 +2,24 @@ import axios from 'axios';
 
 const API_URL = 'https://geotrip-api.onrender.com/points';
 
+export const getPointsByOwnerId = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/getbyuserid/${userId}`);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.error('Error fetching points by user ID:', error.response.data);
+      throw error.response.data;
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+      throw { error: 'No response from server' };
+    } else {
+      console.error('Error setting up request:', error.message);
+      throw { error: error.message };
+    }
+  }
+}
+
 export const getPointById = async (id) => {
   try {
     const response = await axios.get(`${API_URL}/getbyid/${id}`);

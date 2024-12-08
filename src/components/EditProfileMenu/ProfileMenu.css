@@ -1,0 +1,91 @@
+.profileMenuOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+    z-index: 10000;
+    overflow-y: auto;
+}
+
+.profileMenuContainer {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profileNameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.username {
+    margin: 0;
+    margin-right: 0px;
+    color: black;
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+}
+
+.profileLabel {
+    margin: 0;
+    color: #FD7B03;
+    font-size: 1.5em;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.profileCloseButton {
+    position: relative;
+    margin-left: auto;
+    margin-right: -40px;
+    margin-top: -40px;
+    width: 40px;
+    height: 40px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 0;
+}
+
+.profileCloseButton:hover {
+    background-color: #e04e4e;
+}
+
+.profileEditButton {
+    position: relative;
+    margin-left: auto;
+    margin-right: -8px;
+    margin-top: -25px;
+    width: 30px;
+    height: 30px;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 0;
+}

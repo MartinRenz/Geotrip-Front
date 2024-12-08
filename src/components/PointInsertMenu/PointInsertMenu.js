@@ -6,7 +6,7 @@ import { createPointOfInterest } from '../../services/pointApi.js'
 import './PointInsertMenu.css';
 import { HuePicker } from 'react-color';
 
-function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
+function PointInsertMenu({ isOpen, onClose, onConfirm, userId, showToast }) {
     const [pointName, setPointName] = useState('');
     const [pointNameError, setPointNameError] = useState(null);
     const [pointDescription, setPointDesc] = useState('');
@@ -81,6 +81,7 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
             return;
         }
         if (selectedPosition && pointName.trim() !== '' && pointDescription.trim() !== '') {
+            onClose();
             try {
                 const response = await createPointOfInterest({
                     name: pointName,
@@ -90,10 +91,11 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
                     userId: userId,
                     color: currentColor
                 });
+                showToast('Point of Interest created successfully!', true);
                 //onConfirm({ name: pointName, position: selectedPosition });
-                onClose();
             } catch (error) {
                 setError('Error creating point of interest. Please try again.');
+                showToast('Error creating Point of Interest. Please try again.', false);
             }
         } else {
             setError('Please provide a name, description, and select a point on the map.');
