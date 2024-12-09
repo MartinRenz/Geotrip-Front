@@ -17,7 +17,6 @@ function Register() {
     const [confirmPasswordError, setConfirmPasswordError] = useState(null);
     const [message, setMessage] = useState("");
 
-    const maxEmailLength = 80;
     const maxPasswordLength = 20;
 
     const validateEmail = () => {
@@ -91,15 +90,18 @@ function Register() {
                     name="email"
                     placeholder="E-mail"
                     value={email}
-                    onChange={
-                        (e) => e.target.value.length <= maxEmailLength &&
-                            setEmail(e.target.value)
-                    }
+                    onChange={(e) => setEmail(e.target.value)}
                     onBlur={validateEmail}
                     onFocus={() => setEmailError(null)}
                     style={{
                         borderColor: emailError == null ? 'transparent' : 'red',
                     }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter")
+                            handleRegisterButton();
+                    }}
+                    maxLength={30}
+                    disabled={isLoading}
                     required
                 />
                 <p className="errorInput">{emailError}</p>
@@ -109,15 +111,18 @@ function Register() {
                     name="password"
                     placeholder="Password"
                     value={password}
-                    onChange={
-                        (e) => e.target.value.length <= maxPasswordLength &&
-                            setPassword(e.target.value)
-                    }
+                    onChange={(e) => setPassword(e.target.value)}
                     onBlur={validatePassword}
                     onFocus={() => setPasswordError(null)}
                     style={{
                         borderColor: passwordError == null ? 'transparent' : 'red',
                     }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter")
+                            handleRegisterButton();
+                    }}
+                    maxLength={20}
+                    disabled={isLoading}
                     required
                 />
                 <p className="errorInput">{passwordError}</p>
@@ -128,14 +133,18 @@ function Register() {
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={
-                        (e) => e.target.value.length <= maxPasswordLength &&
-                            setConfirmPassword(e.target.value)
-                    }
+                        (e) => setConfirmPassword(e.target.value)}
                     onBlur={validateConfirmPassword}
                     onFocus={() => setConfirmPasswordError(null)}
                     style={{
                         borderColor: confirmPasswordError == null ? 'transparent' : 'red',
                     }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter")
+                            handleRegisterButton();
+                    }}
+                    maxLength={20}
+                    disabled={isLoading}
                     required
                 />
                 <p className="errorInput">{confirmPasswordError}</p>
