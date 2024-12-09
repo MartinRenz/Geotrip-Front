@@ -74,8 +74,6 @@ function Map() {
         const zoom = map.getZoom();
         const northEast = bounds.getNorthEast();
         const southWest = bounds.getSouthWest();
-
-        console.warn("zoom", zoom)
   
         // Criando o objeto para enviar à API com as coordenadas
         const coordinates = {
