@@ -71,8 +71,11 @@ function Map() {
     if (map) {
       const handleMoveEnd = async () => {
         const bounds = map.getBounds();
+        const zoom = map.getZoom();
         const northEast = bounds.getNorthEast();
         const southWest = bounds.getSouthWest();
+
+        console.warn("zoom", zoom)
   
         // Criando o objeto para enviar à API com as coordenadas
         const coordinates = {
@@ -90,7 +93,7 @@ function Map() {
   
         try {
           // Chamando o método getPointsByCoordinates e passando as coordenadas
-          const data = await getPointsByCoordinates({northEast: coordinates.northEast, southWest: coordinates.southWest});
+          const data = await getPointsByCoordinates({northEast: coordinates.northEast, southWest: coordinates.southWest, zoom: zoom});
           console.warn(data.points)
           setPointsOfInterest(data.points);
           console.warn(pointsOfInterest)
