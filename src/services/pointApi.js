@@ -56,9 +56,9 @@ export const getPointByName = async (name) => {
   }
 };
 
-export const getPointsByCoordinates = async ({northEast, southWest}) => {
+export const getPointsByCoordinates = async ({northEast, southWest, zoom}) => {
   try {
-    const response = await axios.post(`${API_URL}/getbycoordinates`, { northEast, southWest });
+    const response = await axios.post(`${API_URL}/getbycoordinates`, { northEast, southWest, zoom });
     return response.data;
   } catch (error) {
     if (error.response) {
