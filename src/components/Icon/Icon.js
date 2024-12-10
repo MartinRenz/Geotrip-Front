@@ -10,14 +10,16 @@ import pointNewIcon from '../../../src/assets/icons/point-new-icon.png';
 import stampGalleryIcon from '../../../src/assets/icons/stamp-gallery-icon.png';
 import logOutIcon from '../../../src/assets/icons/log-out-icon.png';
 import PointInsertMenu from '../PointInsertMenu/PointInsertMenu';
-import ProfileMenu from '../EditProfileMenu/ProfileMenu';
+import ProfileMenu from '../ProfileMenu/ProfileMenu';
+import PointHistoryMenu from '../PointHistoryMenu/PointHistoryMenu';
 import { useNavigate } from 'react-router-dom';
 
-function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, userName }) {
+function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, userName, historyPoints }) {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPointInsertOpen, setIsPointInsertOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const containerRef = useRef(null);
 
   const containerStyle = {
@@ -33,7 +35,7 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
   ];
 
   const guestPointMenuItems = [
-    { icon: pointHistoryIcon, component: null, name: 'History' },
+    { icon: pointHistoryIcon, component: 'PointHistoryMenu', name: 'History' },
   ];
 
   const profileMenuItems = [
@@ -44,8 +46,8 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
   ];
 
   const pointMenuItems = [
-    { icon: pointNewIcon, component: 'PointInsertMenu', name: 'Insert' }, // Identifying it for handling
-    { icon: pointHistoryIcon, component: null, name: 'History' },
+    { icon: pointNewIcon, component: 'PointInsertMenu', name: 'Insert' },
+    { icon: pointHistoryIcon, component: 'PointHistoryMenu', name: 'History' },
   ];
 
   const handleLogout = (e) => {
@@ -59,12 +61,10 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
       pauseOnHover: false,
     };
 
-    if(successfully)
-    {
+    if (successfully) {
       toast.success(message, config);
     }
-    else
-    {
+    else {
       toast.error(message, config);
     }
   };
@@ -80,6 +80,10 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
 
     if (item.component === 'EditProfileMenu') {
       setIsEditProfileOpen(true);
+    }
+
+    if (item.component === 'PointHistoryMenu') {
+      setIsHistoryOpen(true);
     }
 
     if (item.component === 'LogoutButton') {
@@ -115,17 +119,25 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
 
         {isExpanded && iconType === 'ProfileIcon' && (
           <ExpandedMenu
-            items={userId !=null ? profileMenuItems : guestProfileMenuItems}
+            items={userId != null ? profileMenuItems : guestProfileMenuItems}
             onClickItem={handleMenuItemClick}
           />
         )}
         {isExpanded && iconType === 'PointIcon' && (
           <ExpandedMenu
-            items= {userId ? pointMenuItems : guestPointMenuItems}
+            items={userId ? pointMenuItems : guestPointMenuItems}
             onClickItem={handleMenuItemClick}
           />
         )}
       </div>
+
+      {isHistoryOpen && (
+        <PointHistoryMenu
+          isOpen={isHistoryOpen}
+          onClose={() => setIsHistoryOpen(false)}
+          points={historyPoints}
+        />
+      )}
 
       {isEditProfileOpen && (
         <ProfileMenu

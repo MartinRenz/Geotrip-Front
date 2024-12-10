@@ -19,6 +19,21 @@ function Map() {
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
+  const [historyPoints, setHistoryPoints] = useState([]);
+
+  const updateHistoryPoints = (point) => {
+    setHistoryPoints((prevHistory) => {
+      const existingIndex = prevHistory.findIndex((p) => p.id === point.id);
+  
+      if (existingIndex !== -1) {
+        prevHistory.splice(existingIndex, 1);
+      }
+  
+      const updatedHistory = [point, ...prevHistory];
+  
+      return updatedHistory.slice(0, 10);
+    });
+  };
 
   const handleSearch = (searchTerm) => {
     if(searchTerm)
@@ -133,6 +148,13 @@ function Map() {
         <Marker
           position={[location.latitude, location.longitude]}
           icon={createCustomIcon()}
+          eventHandlers={{
+            click: () => {
+              if (mapRef.current) {
+                mapRef.current.setView([location.latitude, location.longitude]);
+              }
+            }
+          }}
         />
         {pointsOfInterest.map((poi) => (
           <Marker
@@ -141,6 +163,10 @@ function Map() {
             icon={createCustomIcon(poi.color)}
             eventHandlers={{
               click: () => {
+                if (mapRef.current) {
+                  mapRef.current.setView([poi.latitude, poi.longitude]);
+                }
+                updateHistoryPoints(poi); 
                 setSelectedPoint(poi);
               },
               mouseover: (e) => {
@@ -161,6 +187,7 @@ function Map() {
         iconType="ProfileIcon"
         flexDirection="row"
         userId={userId}
+        historyPoints={historyPoints}
       />
       <Icon
         bottom="100px"
