@@ -187,7 +187,6 @@ function Map() {
         iconType="ProfileIcon"
         flexDirection="row"
         userId={userId}
-        historyPoints={historyPoints}
       />
       <Icon
         bottom="100px"
@@ -196,6 +195,7 @@ function Map() {
         iconType="PointIcon"
         flexDirection="row"
         userId={userId}
+        historyPoints={historyPoints}
       />
       {selectedPoint && (
         <PointMenu

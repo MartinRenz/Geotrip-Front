@@ -46,16 +46,6 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile }) {
         setIsEditing(false);
     };
 
-    const pointsOfInterest = [
-        { id: 1, name: 'Restaurante A', latitude: -29.6922331, longitude: -53.8571042 },
-        { id: 2, name: 'Museu B', latitude: -29.6907624, longitude: -53.8547881 },
-        { id: 3, name: 'Praça C', latitude: -29.6930283, longitude: -53.8556234 },
-        { id: 4, name: 'Parque D', latitude: -29.6903856, longitude: -53.8580286 },
-        { id: 5, name: 'Loja E', latitude: -29.6942150, longitude: -53.8534207 },
-        { id: 6, name: 'Teatro F', latitude: -29.6911167, longitude: -53.8549531 },
-      ];
-
-
     return isOpen ? (
         <div className="profileMenuOverlay" onClick={onClose}>
             <div className="profileMenuContainer" onClick={(e) => e.stopPropagation()}>
@@ -88,7 +78,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile }) {
                     </h3>
                 </div>
                 <PointList
-                    points={pointsOfInterest}
+                    points={userPoints}
                 />
             </div>
         </div >
