@@ -91,7 +91,7 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId, showToast }) {
                     userId: userId,
                     color: currentColor
                 });
-                showToast('Point of Interest created successfully!', true);
+                showToast(response.message, true);
                 //onConfirm({ name: pointName, position: selectedPosition });
             } catch (error) {
                 setError('Error creating point of interest. Please try again.');

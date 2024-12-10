@@ -53,19 +53,19 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
   }
 
   const showToast = (message, successfully) => {
+    const config = {
+      position: "bottom-center",
+      autoClose: 5000,
+      pauseOnHover: false,
+    };
+
     if(successfully)
     {
-      toast.success(message, {
-        position: "bottom-center",
-        autoClose: 5000,
-      });
+      toast.success(message, config);
     }
     else
     {
-      toast.error(message, {
-        position: "bottom-center",
-        autoClose: 5000,
-      });
+      toast.error(message, config);
     }
   };
 
