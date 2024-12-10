@@ -108,3 +108,17 @@ button.registerButton:hover {
     text-align: center;
     font-size: small;
 }
+
+.rememberMeContainer {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.rememberMeContainer input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    cursor: pointer;
+}
