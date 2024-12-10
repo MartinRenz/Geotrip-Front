@@ -82,6 +82,11 @@ function Login() {
         navigate("/register");
     };
 
+    const handleMapAccess = (e) => {
+        e.preventDefault();
+        navigate('/map', { state: { userId: null } });
+    };
+
     return (
         <div className="loginContainer">
             <img src={logo} className="logo" alt="GeoTrip logo" />
@@ -154,9 +159,7 @@ function Login() {
                     {"Sign up"}
                 </button>
                 <p className="infoMessage">
-                    <a href="#" onClick={(e) => e.preventDefault()}>
-                        Access without login
-                    </a>
+                    <a href="#" onClick={handleMapAccess}>Access without login</a>
                 </p>
             </div>
         </div>
