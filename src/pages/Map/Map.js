@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import uIcon from '../../assets/icons/user-icon.png'
-import geoTripIcon from '../../assets/icons/geo-trip-icon.png'
+import uIcon from '../../assets/icons/user-icon.png';
+import geoTripIcon from '../../assets/icons/geo-trip-icon.png';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Icon from '../../components/Icon/Icon';
-import PointMenu from '../../components/PointMenu/PointMenu.js'
+import PointMenu from '../../components/PointMenu/PointMenu.js';
 import { getPointsByCoordinates } from '../../services/pointApi.js';  
 import { useLocation } from 'react-router-dom';
 import ErrorNotification from "../../ErrorNotification";
@@ -41,8 +41,8 @@ function Map() {
   };
 
   function HandleIsPointOwner(point) {
-    console.warn(point)
-    if(point.user_id == userId)
+    console.warn(point);
+    if(point.user_id === userId)
       return true;
 
     return false;
@@ -80,45 +80,53 @@ function Map() {
     }
   }, [location]);
 
-  // Captura os limites do mapa
+  // Função para buscar pontos de interesse
+  const fetchPoints = async (map) => {
+    if (!map) return;
+
+    const bounds = map.getBounds();
+    const zoom = map.getZoom();
+    const northEast = bounds.getNorthEast();
+    const southWest = bounds.getSouthWest();
+
+    const coordinates = {
+      northEast: {
+        latitude: northEast.lat,
+        longitude: northEast.lng,
+      },
+      southWest: {
+        latitude: southWest.lat,
+        longitude: southWest.lng,
+      },
+    };
+
+    console.log("Fetching points for visible area:", coordinates);
+
+    try {
+      const data = await getPointsByCoordinates({
+        northEast: coordinates.northEast,
+        southWest: coordinates.southWest,
+        zoom: zoom,
+      });
+      setPointsOfInterest(data.points);
+    } catch (error) {
+      console.error("Error fetching points:", error);
+    }
+  };
+
+  // Captura os limites do mapa e busca pontos ao carregar o mapa e ao mover.
   useEffect(() => {
     const map = mapRef.current;
+
     if (map) {
-      const handleMoveEnd = async () => {
-        const bounds = map.getBounds();
-        const zoom = map.getZoom();
-        const northEast = bounds.getNorthEast();
-        const southWest = bounds.getSouthWest();
-  
-        // Criando o objeto para enviar à API com as coordenadas
-        const coordinates = {
-          northEast: {
-            latitude: northEast.lat,
-            longitude: northEast.lng,
-          },
-          southWest: {
-            latitude: southWest.lat,
-            longitude: southWest.lng,
-          },
-        };
-  
-        console.log("Visible area:", coordinates);
-  
-        try {
-          // Chamando o método getPointsByCoordinates e passando as coordenadas
-          const data = await getPointsByCoordinates({northEast: coordinates.northEast, southWest: coordinates.southWest, zoom: zoom});
-          console.warn(data.points)
-          setPointsOfInterest(data.points);
-          console.warn(pointsOfInterest)
-        } catch (error) {
-          console.error('Error fetching points:', error);
-        }
-      };
-  
-      // Captura quando o usuário move ou altera o zoom do mapa
+      // Buscar pontos ao carregar o componente
+      fetchPoints(map);
+
+      // Configurar evento "moveend"
+      const handleMoveEnd = () => fetchPoints(map);
       map.on("moveend", handleMoveEnd);
-  
-      // Limpar o evento quando o componente for desmontado
+
+      // Limpar evento ao desmontar o componente
       return () => {
         map.off("moveend", handleMoveEnd);
       };
@@ -130,7 +138,7 @@ function Map() {
     return <div>{error}</div>;
   }
 
-  console.warn("userId", userId)
+  console.warn("userId", userId);
 
   return (
     <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
