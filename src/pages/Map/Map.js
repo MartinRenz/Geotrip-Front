@@ -9,6 +9,7 @@ import { getPointsByCoordinates } from '../../services/pointApi.js';
 import { useLocation } from 'react-router-dom';
 import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
+import userIcon from "../../components/LeafletUserIcon/LeafletUserIcon.js";
 import createCustomIcon from "../../components/LeafletIcon/LeafletIcon.js";
 
 function Map() {
@@ -155,7 +156,7 @@ function Map() {
         />
         <Marker
           position={[location.latitude, location.longitude]}
-          icon={createCustomIcon()}
+          icon={userIcon()}
           eventHandlers={{
             click: () => {
               if (mapRef.current) {
