@@ -10,9 +10,9 @@ function SearchBar({ onSearch }) {
 
   // Função que define o valor do input ao clicar na opção
   const handleOptionClick = (option) => {
-    setSearchTerm(option.name);
-    setFilteredOptions([]);
-    onSearch(option);
+    setSearchTerm('');  // Limpa o termo de busca ao selecionar
+    setFilteredOptions([]);      // Limpa a lista de opções
+    onSearch(option);            // Chama a função onSearch com a opção selecionada
   };
 
   const handleSearchEnter = (e) => {
@@ -43,9 +43,9 @@ function SearchBar({ onSearch }) {
 
   useEffect(() => {
     if (searchTerm === '') {
-      setFilteredOptions([]);
+      setFilteredOptions([]);  // Se o termo estiver vazio, limpa as opções
     } else {
-      fetchPoints(searchTerm);  // Chama a função de busca
+      fetchPoints(searchTerm); // Se houver um termo, busca pontos relacionados
     }
   }, [searchTerm]);  // Dependência de searchTerm
 
