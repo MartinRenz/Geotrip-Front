@@ -11,6 +11,7 @@ import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
 import userIcon from "../../components/LeafletUserIcon/LeafletUserIcon.js";
 import createCustomIcon from "../../components/LeafletIcon/LeafletIcon.js";
+import { point } from "leaflet";
 
 function Map() {
   const locationData = useLocation();
@@ -34,6 +35,11 @@ function Map() {
   
       return updatedHistory.slice(0, 10);
     });
+  };
+
+  const handlePointListClick = (point) => {
+    if(point)
+      mapRef.current.setView([point.latitude, point.longitude], 18);
   };
 
   const handleSearch = (searchTerm) => {
@@ -196,6 +202,7 @@ function Map() {
         iconType="ProfileIcon"
         flexDirection="row"
         userId={userId}
+        pointListClickHandler={handlePointListClick}
       />
       <Icon
         bottom="100px"
@@ -205,6 +212,7 @@ function Map() {
         flexDirection="row"
         userId={userId}
         historyPoints={historyPoints}
+        pointListClickHandler={handlePointListClick}
       />
       {selectedPoint && (
         <PointMenu

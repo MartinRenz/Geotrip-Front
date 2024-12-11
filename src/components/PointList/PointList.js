@@ -1,10 +1,10 @@
 import React from "react";
 import "./PointList.css"
 
-function PointList({ points, map }) {
-    const handleClick = (coordinates) => {
-        if (map && coordinates) {
-            map.flyTo(coordinates, 13); // Adjust the zoom level as needed
+function PointList({ points, pointListClickHandler }) {
+    const handleClick = (point) => {
+        if (point) {
+            pointListClickHandler(point); // Adjust the zoom level as needed
         }
     };
 
@@ -42,7 +42,7 @@ function PointList({ points, map }) {
                 <div
                     className="pointListItemContainer"
                     key={index}
-                    onClick={() => handleClick(point.coordinates)} // Navigate to the point
+                    onClick={() => handleClick(point)} // Navigate to the point
                     style={{ cursor: "pointer" }}
                 >
                     <div className="pointListItem">

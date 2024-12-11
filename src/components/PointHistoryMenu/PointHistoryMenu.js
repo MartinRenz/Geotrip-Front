@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./PointHistoryMenu.css";
 import PointList from "../PointList/PointList";
 
-function PointHistoryMenu({ isOpen, onClose, points }) {
+function PointHistoryMenu({ isOpen, onClose, points, pointListClickHandler }) {
     useEffect(() => {
         function handleOverlayClick(e) {
             if (e.target.classList.contains('historyMenuOverlay')) {
@@ -23,6 +23,7 @@ function PointHistoryMenu({ isOpen, onClose, points }) {
                 <PointList
                     points={points}
                     map={null}
+                    pointListClickHandler={pointListClickHandler}
                 />
             </div>
         </div>
