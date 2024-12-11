@@ -24,15 +24,20 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile }) {
     }, [onClose]);
 
     useEffect(() => {
-        if (isOpen && userId) {
-            // Fetch user points when the menu is opened
-            getPointsByOwnerId(userId)
-                .then((points) => {
-                    setUserPoints(points);
-                })
-                .catch((error) => {
-                    console.error("Failed to fetch user points:", error);
-                });
+        // Fetch points when menu is open
+        const fetchPoints = async () => {
+            try {
+                console.log("Fetching points of interest...");
+                const data = await getPointsByOwnerId({ userId });
+                console.log("Fetched points:", data.points);
+                setUserPoints(data.points); // Update the state with fetched points
+            } catch (error) {
+                console.error("Error fetching points of interest:", error);
+            }
+        };
+
+        if (isOpen) {
+            fetchPoints();
         }
     }, [isOpen, userId]);
 
