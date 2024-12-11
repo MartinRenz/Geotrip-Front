@@ -14,7 +14,7 @@ import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import PointHistoryMenu from '../PointHistoryMenu/PointHistoryMenu';
 import { useNavigate } from 'react-router-dom';
 
-function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, userName, historyPoints }) {
+function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, userName, historyPoints, pointListClickHandler }) {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPointInsertOpen, setIsPointInsertOpen] = useState(false);
@@ -136,6 +136,7 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
           isOpen={isHistoryOpen}
           onClose={() => setIsHistoryOpen(false)}
           points={historyPoints}
+          pointListClickHandler={pointListClickHandler}
         />
       )}
 
@@ -146,6 +147,7 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
           userId={userId}
           userName={userName}
           isOwnProfile={true}
+          pointListClickHandler={pointListClickHandler}
         />
       )}
       {/* Render PointInsertMenu if open */}

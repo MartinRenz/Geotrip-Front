@@ -5,7 +5,7 @@ import "./ProfileMenu.css"
 import { getPointsByOwnerId } from "../../services/pointApi";
 import PointList from "../PointList/PointList";
 
-function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile }) {
+function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointListClickHandler }) {
     const [isEditing, setIsEditing] = useState(false);
     const [newUserName, setNewUserName] = useState(userName);
     const [userPoints, setUserPoints] = useState(null);
@@ -84,6 +84,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile }) {
                 </div>
                 <PointList
                     points={userPoints}
+                    pointListClickHandler={pointListClickHandler}
                 />
             </div>
         </div >
