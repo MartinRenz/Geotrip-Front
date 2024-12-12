@@ -31,6 +31,10 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
 
       async function handleCheckButton() {
         try {
+            if(userId == null) {
+                showToast("You must be a user to check in.", false);
+                return;
+            }
             setIsLoading(true);
             if (hasCheckedIn) {
                 await userCheckout(userId, point.id);
@@ -79,7 +83,7 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
                         <span style={{marginLeft: '20px', color: 'red', fontWeight: 'bold' }}>
                             {checkInCount}
                         </span>
-                        <h3>people have...</h3>
+                        <h3>Checked-in</h3>
                         <button onClick={handleCheckButton} disabled={isLoading}>
                             {isLoading ? <Spinner /> : (hasCheckedIn ? 'Check-out' : 'Check-in')}
                         </button>
