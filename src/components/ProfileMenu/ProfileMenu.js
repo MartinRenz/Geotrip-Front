@@ -26,6 +26,11 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
     const [confirmPasswordError, setConfirmPasswordError] = useState(null);
     const [message, setMessage] = useState("");
     const [userPoints, setUserPoints] = useState(null);
+    const [oldValue, setOldValue] = useState({
+        email: "",
+        username: "",
+        password: "",
+    });
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -35,6 +40,11 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                 const userData = response.user
                 setNewUserName(userData.username);
                 setEmail(userData.email);
+                setOldValue({
+                    email: userData.email,
+                    username: userData.username,
+                    pasword: ""
+                });
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error in search users.");
@@ -77,6 +87,35 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
         }
     }, [isOpen, userId]);
 
+    const handleEditUsername = () => {
+        if(!isUsernameEditable)
+        {
+            setNewUserName("")
+        }
+        else
+        {
+            setNewUserName(oldValue.username)
+        }
+        setIsUsernameEditable(!isUsernameEditable);
+    }
+
+    const handleEditPassword = () => {
+        setPassword("")
+        setIsPasswordEditable(!isPasswordEditable);    
+    }
+
+    const handleEditEmail = () => {
+        if(!isEmailEditable)
+        {
+            setEmail("")
+        }
+        else
+        {
+            setEmail(oldValue.email)
+        }
+        setIsEmailEditable(!isEmailEditable);    
+    }
+
     const validateUsername = () => {
         if (newUserName.length > 15) {
             setUsernameError("Username must have less then 15 characters.")
@@ -105,6 +144,18 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
     const handleEditButton = async () => {
         try {
             setIsLoading(true);
+            if
+            (
+                newUserName === oldValue.username &&
+                email === oldValue.email &&
+                password === ""
+            ) 
+            {
+                setError("The values ​​of the changed fields are the same as the original ones.");
+                setIsLoading(false);
+                return;
+            }
+
             if (!newUserName.trim() || !email.trim() || !password.trim()) {
                 validateUsername();
                 validateEmail();
@@ -165,7 +216,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         <img
                             src={editImage}
                             alt="Edit"
-                            onClick={() => { setIsUsernameEditable(!isUsernameEditable); setNewUserName("") }}
+                            onClick={handleEditUsername}
                             disabled={isLoading}
                         />
                     </div>
@@ -186,7 +237,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         <img
                             src={editImage}
                             alt="Edit"
-                            onClick={() => { setIsEmailEditable(!isEmailEditable); setEmail("") }}
+                            onClick={handleEditEmail}
                             disabled={isLoading}
                         />
                     </div>
@@ -206,17 +257,20 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         <img
                             src={editImage}
                             alt="Edit"
-                            onClick={() => { setIsPasswordEditable(!isPasswordEditable); setPassword("") }}
+                            onClick={ handleEditPassword }
                             disabled={isLoading}
                         />
                     </div>
-                    <button
-                        className={`editButton ${isLoading ? "loading" : ""}`}
-                        onClick={handleEditButton}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? <Spinner color={"#FD7B03"} /> : "Edit"}
-                    </button>
+                    <p className="errorMessage" style={{paddingBottom: 10}}>{error}</p>
+                    {(isEmailEditable || isPasswordEditable || isUsernameEditable) && (
+                        <button
+                            className={`editButton ${isLoading ? "loading" : ""}`}
+                            onClick={handleEditButton}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? <Spinner color={"#FD7B03"} /> : "Edit"}
+                        </button>
+                    )}
                     {/* <h3 className="username">
                         {isOwnProfile && !isEditing && (
                             <img
