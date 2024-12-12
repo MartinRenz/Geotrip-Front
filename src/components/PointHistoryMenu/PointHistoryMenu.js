@@ -20,7 +20,7 @@ function PointHistoryMenu({ isOpen, onClose, points, pointListClickHandler }) {
         <div className="historyMenuOverlay" onClick={onClose}>
             <div className="historyMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} className="historyCloseButton">✕</button>
-                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>Point history</h3>
+                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>Point History</h3>
                 <PointList
                     points={points}
                     map={null}
