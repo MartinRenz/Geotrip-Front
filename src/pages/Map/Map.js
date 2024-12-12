@@ -213,6 +213,7 @@ function Map() {
           userId={userId}
           onClose={() => setSelectedPoint(null)}
           isOwner={HandleIsPointOwner(selectedPoint)}
+          pointListClickHandler={handlePointListClick}
         />
       )}
     </div>

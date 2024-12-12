@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import './PointMenu.css';
 import placeHolder from '../../assets/icons/arco-ufsm.jpg';
 import Spinner from "../../components/Spinner/Spinner";
-import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import { deletePointOfInterest } from '../../services/pointApi'; 
 import { userCheckin, userCheckout, getCheckinInfo } from '../../services/userPointsApi';
 import { toast } from "react-toastify"; 
+import UsersProfileMenu from '../UsersProfile/UsersProfile';
 
-function PointMenu({ point, userId, onClose, isOwner }) {
+function PointMenu({ point, userId, onClose, isOwner, pointListClickHandler }) {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [checkInCount, setCheckInCount] = useState(0);
@@ -77,9 +77,9 @@ function PointMenu({ point, userId, onClose, isOwner }) {
     };
 
     const openProfileMenu = () => {
-        if (point.userId) {
-            setProfileUserId(point.userId); // Set the userId of the creator
-            setIsProfileMenuOpen(true); // Open the profile menu
+        if (point.user_id) {
+            setProfileUserId(point.user_id);
+            setIsProfileMenuOpen(true);
         }
     };
 
@@ -119,12 +119,13 @@ function PointMenu({ point, userId, onClose, isOwner }) {
                 </div>
             </div>
             {isProfileMenuOpen && (
-                <ProfileMenu
+                <UsersProfileMenu
                     isOpen={isProfileMenuOpen}
                     onClose={() => setIsProfileMenuOpen(false)}
                     userId={profileUserId}
                     isOwnProfile={isOwner}
                     userName={point.userName}
+                    pointListClickHandler={pointListClickHandler}
                 />
             )}
         </div>
