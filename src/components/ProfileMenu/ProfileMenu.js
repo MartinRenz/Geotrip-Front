@@ -1,14 +1,50 @@
 import React, { useState } from "react";
 import { useEffect } from 'react';
+import { createUser } from "../../services/userApi";
 import editImage from "../../assets/icons/edit.png";
 import "./ProfileMenu.css"
+import { getUserById } from "../../services/userApi";
 import { getPointsByOwnerId } from "../../services/pointApi";
+import Spinner from "../../components/Spinner/Spinner";
 import PointList from "../PointList/PointList";
 
 function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointListClickHandler }) {
+    const [isLoading, setIsLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [newUserName, setNewUserName] = useState(userName);
+    const [email, setEmail] = useState("");
+    const [isEmailEditable, setIsEmailEditable] = useState(false);
+    const [isUsernameEditable, setIsUsernameEditable] = useState(false);
+    const [isPasswordEditable, setIsPasswordEditable] = useState(false);
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState(null);
+    const [usernameError, setUsernameError] = useState(null);
+    const [emailError, setEmailError] = useState(null);
+    const [passwordError, setPasswordError] = useState(null);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+    const [message, setMessage] = useState("");
     const [userPoints, setUserPoints] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                setIsLoading(true);
+                const response = await getUserById(userId);
+                const userData = response.user
+                setNewUserName(userData.username);
+                setEmail(userData.email);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error in search users.");
+                setIsLoading(false);
+            }
+        };
+    
+        if (isOpen) {
+            fetchUserData();
+        }
+    }, [isOpen, userId]);
 
     useEffect(() => {
         function handleOverlayClick(e) {
@@ -40,6 +76,54 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
         }
     }, [isOpen, userId]);
 
+    const validateUsername = () => {
+        if (newUserName.length > 15) {
+            setUsernameError("Username must have less then 15 characters.")
+            return;
+        }
+        setUsernameError(null)
+    };
+
+    const validateEmail = () => {
+        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const isValidEmail = !regex.test(email)
+            ? "E-mail is in an invalid format."
+            : null;
+
+        setEmailError(isValidEmail)
+    };
+
+    const validatePassword = () => {
+        if (password.length <= 3) {
+            setPasswordError("Password is in an invalid format, and must have between 4 and 20 characters.")
+            return;
+        }
+        setPasswordError(null)
+    };
+
+    const handleEditButton = async () => {
+        try {
+            setIsLoading(true);
+            if (!newUserName.trim() || !email.trim() || !password.trim()) {
+                validateUsername();
+                validateEmail();
+                validatePassword();
+            }
+            if (emailError != null || passwordError != null || confirmPasswordError) {
+                setIsLoading(false);
+                return;
+            }
+            const data = await createUser(newUserName, email, password);
+            setMessage(data.message);
+            setError(null);
+            setIsLoading(false);
+        } catch (err) {
+            setError(err.error || 'Something went wrong with the register.');
+            setIsLoading(false);
+            setMessage('');
+        }
+    };
+
 
     const handleInputChange = (e) => {
         setNewUserName(e.target.value);
@@ -55,7 +139,77 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
             <div className="profileMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} className="profileCloseButton">✕</button>
                 <div className="profileNameContainer">
-                    <h3 className="username">
+                    <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>Edit User</h3>
+                    <div className="emailInputContainer">
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={newUserName}
+                            onChange={(e) => setNewUserName(e.target.value)}
+                            onBlur={() => {
+                                validateUsername();
+                            }}
+                            onFocus={() => setNewUserName(null)}
+                            maxLength={30}
+                            disabled={!isUsernameEditable || isLoading}
+                            required
+                        />
+                        <img
+                            src={editImage}
+                            alt="Edit"
+                            onClick={() => {setIsUsernameEditable(!isUsernameEditable); setNewUserName("")}}
+                            disabled={isLoading}
+                        />
+                    </div>
+                    <div className="emailInputContainer">
+                        <input
+                            type="text"
+                            placeholder="E-mail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            onBlur={() => {
+                                validateEmail();
+                            }}
+                            onFocus={() => setEmailError(null)}
+                            maxLength={30}
+                            disabled={!isEmailEditable || isLoading }
+                            required
+                        />
+                        <img
+                            src={editImage}
+                            alt="Edit"
+                            onClick={() => {setIsEmailEditable(!isEmailEditable); setEmail("")}}
+                            disabled={isLoading}
+                        />
+                    </div>
+                    <div className="emailInputContainer">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            onBlur={validatePassword}
+                            onFocus={() => setPasswordError(null)}
+                            maxLength={20}
+                            disabled={!isPasswordEditable || isLoading }
+                            required
+                        />
+                        <img
+                            src={editImage}
+                            alt="Edit"
+                            onClick={() => {setIsPasswordEditable(!isPasswordEditable); setPassword("")}}
+                            disabled={isLoading}
+                        />
+                    </div>
+                    <button
+                        className={`editButton ${isLoading ? "loading" : ""}`}
+                        onClick={handleEditButton}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? <Spinner color={"#FD7B03"}/> : "Edit"}
+                    </button>
+                    {/* <h3 className="username">
                         {isOwnProfile && !isEditing && (
                             <img
                                 src={editImage}
@@ -79,8 +233,9 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                     </h3>
                     <h3 className="profileLabel">
                         's Profile
-                    </h3>
+                    </h3> */}
                 </div>
+                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>User Points</h3>
                 <PointList
                     points={userPoints}
                     pointListClickHandler={pointListClickHandler}

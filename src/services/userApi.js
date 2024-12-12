@@ -31,3 +31,18 @@ export const createUser = async (username, email, password) => {
     }
   }
 };
+
+export const getUserById = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/getbyid/${id}`);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw error.response.data;
+    } else if (error.request) {
+      throw { error: 'No response from server' };
+    } else {
+      throw { error: error.message };
+    }
+  }
+};
