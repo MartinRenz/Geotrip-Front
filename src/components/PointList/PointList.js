@@ -38,29 +38,37 @@ function PointList({ points, pointListClickHandler }) {
 
     return (
         <div className="pointListContainer">
-            {points != null && points.map((point, index) => (
-                <div
-                    className="pointListItemContainer"
-                    key={index}
-                    onClick={() => handleClick(point)} // Navigate to the point
-                    style={{ cursor: "pointer" }}
-                >
-                    <div className="pointListItem">
-                        <img
-                            className="pointListItemIcon"
-                            src={createSvgImage(point.color)}
-                            alt={`${point.name} icon`}
-                            style={{ width: "40px", height: "56px" }}
-                        ></img>
-                        <div className="pointListItemName">{point.name}</div>
+            {Array.isArray(points) && points.length > 0 ? (
+                points.map((point, index) => (
+                    <div
+                        className="pointListItemContainer"
+                        key={index}
+                        onClick={() => handleClick(point)} // Navigate to the point
+                        style={{ cursor: "pointer" }}
+                    >
+                        <div className="pointListItem">
+                            <img
+                                className="pointListItemIcon"
+                                src={createSvgImage(point.color)}
+                                alt={`${point.name} icon`}
+                                style={{ width: "40px", height: "56px" }}
+                            ></img>
+                            <div className="pointListItemName">{point.name}</div>
+                        </div>
                     </div>
-                </div>
-            ))
-            }
-            {points === null &&
-                <h5 style={{ textAlign: 'center', margin: 0, color: "#FFFFFFF"}}>This point list is empty</h5>}
-
-        </div >
+                ))
+            ) : (
+                <h5
+                    style={{
+                        textAlign: "center",
+                        margin: 0,
+                        color: "#000000",
+                    }}
+                >
+                    This point list is empty
+                </h5>
+            )}
+        </div>
     );
 }
 
