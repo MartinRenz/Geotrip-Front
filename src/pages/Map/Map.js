@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import uIcon from '../../assets/icons/user-icon.png';
 import geoTripIcon from '../../assets/icons/geo-trip-icon.png';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -7,10 +7,9 @@ import Icon from '../../components/Icon/Icon';
 import PointMenu from '../../components/PointMenu/PointMenu.js';
 import { getPointsByCoordinates } from '../../services/pointApi.js';  
 import { useLocation } from 'react-router-dom';
-import ErrorNotification from "../../ErrorNotification";
 import "leaflet/dist/leaflet.css";
 import createCustomIcon from "../../components/LeafletIcon/LeafletIcon.js";
-import { point } from "leaflet";
+import { toast } from "react-toastify";
 
 function Map() {
   const locationData = useLocation();
@@ -21,6 +20,21 @@ function Map() {
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
   const [historyPoints, setHistoryPoints] = useState([]);
+
+  const showToast = (message, successfully) => {
+      const config = {
+        position: "bottom-center",
+        autoClose: 5000,
+        pauseOnHover: false,
+      };
+  
+      if (successfully) {
+        toast.success(message, config);
+      }
+      else {
+        toast.error(message, config);
+      }
+    };
 
   const updateHistoryPoints = (point) => {
     setHistoryPoints((prevHistory) => {
@@ -137,7 +151,7 @@ function Map() {
         map.off("moveend", handleMoveEnd);
       };
     }
-  }, [mapRef.current]);
+  }, []);
 
   // Renderiza uma mensagem de erro caso ocorra.
   if (error) {
@@ -218,6 +232,7 @@ function Map() {
           point={selectedPoint}
           onClose={() => setSelectedPoint(null)}
           isOwner={HandleIsPointOwner(selectedPoint)}
+          showToast={showToast}
         />
       )}
     </div>

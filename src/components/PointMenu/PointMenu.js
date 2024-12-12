@@ -3,7 +3,7 @@ import './PointMenu.css';
 import placeHolder from '../../assets/icons/arco-ufsm.jpg';
 import { deletePointOfInterest } from '../../services/pointApi'; 
 
-function PointMenu({ point, onClose, isOwner }) {
+function PointMenu({ point, onClose, isOwner, showToast }) {
     const [error, setError] = useState(null);
 
     function HandleCheckInButton() {
@@ -12,10 +12,12 @@ function PointMenu({ point, onClose, isOwner }) {
 
     const handleDeleteButton = async () => {
         try {
-            await deletePointOfInterest(point.id);
             onClose();
+            await deletePointOfInterest(point.id);
+            showToast("Point deleted successfully!", true);
         } catch (error) {
             setError('Error deleting point.');
+            showToast("Failed to delete point", false);
         }
     };
 
@@ -24,7 +26,7 @@ function PointMenu({ point, onClose, isOwner }) {
             <div className="pointMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <div className="pointMenuHeader">
                     <button onClick={onClose} class="closeButton">✕</button>
-                    <img src={placeHolder} alt='UFSM image'></img>
+                    <img src={placeHolder} alt='UFSM'></img>
                     <h3 style={{ textAlign: 'center', marginBottom: 1, color: "#FD7B03"}}>{point.name}</h3>
                     <p style={{margin: 2}}>{point.description}</p>
                     {point.email && <p style={{marginTop: 2}}><strong>Creator:</strong> {point.email}</p>}
