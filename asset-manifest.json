@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Geotrip-Front/static/css/main.f642a437.css",
-    "main.js": "/Geotrip-Front/static/js/main.78001504.js",
+    "main.js": "/Geotrip-Front/static/js/main.c679936e.js",
     "static/js/453.0ad38193.chunk.js": "/Geotrip-Front/static/js/453.0ad38193.chunk.js",
     "static/media/arco-ufsm.jpg": "/Geotrip-Front/static/media/arco-ufsm.afe3b4de5b2da6fbe646.jpg",
     "static/media/logo.png": "/Geotrip-Front/static/media/logo.7cdd8113c1ce90594043.png",
@@ -11,11 +11,11 @@
     "static/media/logo.svg": "/Geotrip-Front/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/Geotrip-Front/index.html",
     "main.f642a437.css.map": "/Geotrip-Front/static/css/main.f642a437.css.map",
-    "main.78001504.js.map": "/Geotrip-Front/static/js/main.78001504.js.map",
+    "main.c679936e.js.map": "/Geotrip-Front/static/js/main.c679936e.js.map",
     "453.0ad38193.chunk.js.map": "/Geotrip-Front/static/js/453.0ad38193.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f642a437.css",
-    "static/js/main.78001504.js"
+    "static/js/main.c679936e.js"
   ]
 }
