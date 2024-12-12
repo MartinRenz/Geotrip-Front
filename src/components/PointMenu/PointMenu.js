@@ -1,14 +1,52 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PointMenu.css';
 import placeHolder from '../../assets/icons/arco-ufsm.jpg';
+import Spinner from "../../components/Spinner/Spinner";
 import { deletePointOfInterest } from '../../services/pointApi'; 
+import { userCheckin, userCheckout, getCheckinInfo } from '../../services/userPointsApi';
 
-function PointMenu({ point, onClose, isOwner, showToast }) {
+function PointMenu({ point, userId, onClose, isOwner, showToast }) {
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [checkInCount, setCheckInCount] = useState(0);
+    const [hasCheckedIn, setHasCheckedIn] = useState(false);
 
-    function HandleCheckInButton() {
-        // INCREMENTA CHECK-IN DO PONTO
-    }
+    useEffect(() => {
+        const fetchCheckinInfo = async () => {
+          try {
+            setIsLoading(true);
+            const data = await getCheckinInfo(userId, point.id);
+            const response = data.data;
+            setCheckInCount(response.total_interactions);
+            setHasCheckedIn(response.user_interacted);
+            setIsLoading(false);
+          } catch (err) {
+            setIsLoading(false);
+            setError(err.error || 'Failed to fetch check-in information.');
+          }
+        };
+    
+        fetchCheckinInfo();
+      }, [userId, point.id]);
+
+      async function handleCheckButton() {
+        try {
+            setIsLoading(true);
+            if (hasCheckedIn) {
+                await userCheckout(userId, point.id);
+                setHasCheckedIn(false);
+                setCheckInCount((prev) => (prev > 0 ? prev - 1 : 0));
+            } else {
+                await userCheckin(userId, point.id);
+                setHasCheckedIn(true);
+                setCheckInCount((prev) => prev + 1);
+            }
+            setIsLoading(false);
+        } catch (err) {
+            setIsLoading(false);
+            showToast("Error in the check action.", false);
+        }
+    }    
 
     const handleDeleteButton = async () => {
         try {
@@ -39,10 +77,12 @@ function PointMenu({ point, onClose, isOwner, showToast }) {
                 <div className="pointMenuContent">
                     <div className="pointMenuCheckInField">
                         <span style={{marginLeft: '20px', color: 'red', fontWeight: 'bold' }}>
-                            {point.checkInCount || 0}
+                            {checkInCount}
                         </span>
                         <h3>people have...</h3>
-                        <button onClick={HandleCheckInButton}>Checked in</button>
+                        <button onClick={handleCheckButton} disabled={isLoading}>
+                            {isLoading ? <Spinner /> : (hasCheckedIn ? 'Check-out' : 'Check-in')}
+                        </button>
                     </div>
                 </div>
             </div>

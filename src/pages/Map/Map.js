@@ -226,6 +226,7 @@ function Map() {
       {selectedPoint && (
         <PointMenu
           point={selectedPoint}
+          userId={userId}
           onClose={() => setSelectedPoint(null)}
           isOwner={HandleIsPointOwner(selectedPoint)}
           showToast={showToast}

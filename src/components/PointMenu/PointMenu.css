@@ -138,6 +138,14 @@
     color: white;
     font-weight: bolder;
     font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pointMenuCheckInField button:disabled {
+    background-color: #FFa652;
+    cursor: not-allowed;
 }
 
 .deleteButton {
