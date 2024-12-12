@@ -243,7 +243,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         's Profile
                     </h3> */}
                 </div>
-                {userPoints != null && <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>User Points</h3>}
+                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>User Points</h3>
                 <PointList
                     points={userPoints}
                     pointListClickHandler={pointListClickHandler}

@@ -114,7 +114,7 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
                     onClose={() => setIsProfileMenuOpen(false)}
                     userId={profileUserId}
                     isOwnProfile={isOwner}
-                    userName={point.creatorName}
+                    userName={point.userName}
                 />
             )}
         </div>

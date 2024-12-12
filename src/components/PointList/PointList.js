@@ -57,7 +57,7 @@ function PointList({ points, pointListClickHandler }) {
                 </div>
             ))
             }
-            {points.length === 0 &&
+            {points === null &&
                 <h5 style={{ textAlign: 'center', margin: 0, color: "#FFFFFFF"}}>This point list is empty</h5>}
 
         </div >
