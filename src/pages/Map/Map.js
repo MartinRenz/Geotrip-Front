@@ -149,7 +149,7 @@ function Map() {
         map.off("moveend", handleMoveEnd);
       };
     }
-  }, []);
+  }, [mapRef.current]);
 
   // Renderiza uma mensagem de erro caso ocorra.
   if (error) {
