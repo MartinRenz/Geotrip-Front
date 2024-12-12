@@ -10,7 +10,6 @@ import { useLocation } from 'react-router-dom';
 import "leaflet/dist/leaflet.css";
 import userIcon from "../../components/LeafletUserIcon/LeafletUserIcon.js";
 import createCustomIcon from "../../components/LeafletIcon/LeafletIcon.js";
-import { toast } from "react-toastify";
 
 function Map() {
   const locationData = useLocation();
@@ -21,21 +20,6 @@ function Map() {
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
   const [historyPoints, setHistoryPoints] = useState([]);
-
-  const showToast = (message, successfully) => {
-      const config = {
-        position: "bottom-center",
-        autoClose: 5000,
-        pauseOnHover: false,
-      };
-  
-      if (successfully) {
-        toast.success(message, config);
-      }
-      else {
-        toast.error(message, config);
-      }
-    };
 
   const updateHistoryPoints = (point) => {
     setHistoryPoints((prevHistory) => {
@@ -229,7 +213,6 @@ function Map() {
           userId={userId}
           onClose={() => setSelectedPoint(null)}
           isOwner={HandleIsPointOwner(selectedPoint)}
-          showToast={showToast}
         />
       )}
     </div>

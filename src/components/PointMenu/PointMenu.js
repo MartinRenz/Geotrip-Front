@@ -5,8 +5,9 @@ import Spinner from "../../components/Spinner/Spinner";
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import { deletePointOfInterest } from '../../services/pointApi'; 
 import { userCheckin, userCheckout, getCheckinInfo } from '../../services/userPointsApi';
+import { toast } from "react-toastify"; 
 
-function PointMenu({ point, userId, onClose, isOwner, showToast }) {
+function PointMenu({ point, userId, onClose, isOwner }) {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [checkInCount, setCheckInCount] = useState(0);
@@ -35,7 +36,10 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
       async function handleCheckButton() {
         try {
             if(userId == null) {
-                showToast("You must be a user to check in.", false);
+                console.log("A")
+                toast.error("You must be a user to check in.", {
+                    containerId: 'GlobalApplicationToast'
+                });
                 return;
             }
             setIsLoading(true);
@@ -51,7 +55,9 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
             setIsLoading(false);
         } catch (err) {
             setIsLoading(false);
-            showToast("Error in the check action.", false);
+            toast.error("Error in the check action.", {
+                containerId: 'GlobalApplicationToast'
+            });
         }
     }    
 
@@ -59,10 +65,14 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
         try {
             onClose();
             await deletePointOfInterest(point.id);
-            showToast("Point deleted successfully!", true);
+            toast.success("Point deleted successfully!", {
+                containerId: 'GlobalApplicationToast'
+            });
         } catch (error) {
             setError('Error deleting point.');
-            showToast("Failed to delete point", false);
+            toast.error("Failed to delete point", {
+                containerId: 'GlobalApplicationToast'
+            });
         }
     };
 

@@ -54,20 +54,20 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
     navigate('/login', { state: { userId: null } });
   }
 
-  const showToast = (message, successfully) => {
-    const config = {
-      position: "bottom-center",
-      autoClose: 5000,
-      pauseOnHover: false,
-      toastId: "unique-toast",
-    };
+  // const showToast = (message, successfully) => {
+  //   const config = {
+  //     position: "bottom-center",
+  //     autoClose: 5000,
+  //     pauseOnHover: false,
+  //     toastId: "unique-toast",
+  //   };
   
-    if (successfully) {
-      toast.success(message, config);
-    } else {
-      toast.error(message, config);
-    }
-  };  
+  //   if (successfully) {
+  //     toast.success(message, config);
+  //   } else {
+  //     toast.error(message, config);
+  //   }
+  // };  
 
   function handleExpandIcon() {
     setIsExpanded((prev) => !prev);
@@ -159,11 +159,11 @@ function Icon({ bottom, left, right, icon, iconType, flexDirection, userId, user
             window.alert('Point created!');
           }}
           userId={userId}
-          showToast={showToast}
+          // showToast={showToast}
         />
       )}
 
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 }

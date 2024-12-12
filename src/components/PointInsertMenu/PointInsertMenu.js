@@ -4,9 +4,10 @@ import createCustomIcon from "../LeafletIcon/LeafletIcon.js"
 import 'leaflet/dist/leaflet.css';
 import { createPointOfInterest } from '../../services/pointApi.js'
 import './PointInsertMenu.css';
+import { toast } from "react-toastify";
 import { HuePicker } from 'react-color';
 
-function PointInsertMenu({ isOpen, onClose, onConfirm, userId, showToast }) {
+function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
     const [pointName, setPointName] = useState('');
     const [pointNameError, setPointNameError] = useState(null);
     const [pointDescription, setPointDesc] = useState('');
@@ -90,11 +91,17 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId, showToast }) {
                     userId: userId,
                     color: currentColor
                 });
-                showToast(response.message, true);
+
+                toast.success(response.message, {
+                    containerId: 'GlobalApplicationToast'
+                });
                 //onConfirm({ name: pointName, position: selectedPosition });
             } catch (error) {
                 setError('Error creating point of interest. Please try again.');
-                showToast('Error creating Point of Interest. Please try again.', false);
+                
+                toast.error("Error creating Point of Interest. Please try again.", {
+                    containerId: 'GlobalApplicationToast'
+                });
             }
         } else {
             setError('Please provide a name, description, and select a point on the map.');
