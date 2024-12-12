@@ -7,11 +7,12 @@ function ExpandedMenu({ items, onClickItem }) {
     <div className="expandedMenu">
       {items.map((item, index) => (
         <div className='expandedMenuIconContainer' key={index}>
-          <div className="icon" onClick={() => onClickItem(item)}>
+          {item.component != null && <div className="icon" onClick={() => onClickItem(item)}>
             <img src={item.icon} width="75px" height="75px" alt="" />
 
             <div className="icon-name">{item.name}</div>
-          </div>
+          </div>}
+
         </div>
       ))}
     </div>

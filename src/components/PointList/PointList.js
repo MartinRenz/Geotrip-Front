@@ -38,7 +38,6 @@ function PointList({ points, pointListClickHandler }) {
 
     return (
         <div className="pointListContainer">
-            {points != null && <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>User Points</h3>}
             {points != null && points.map((point, index) => (
                 <div
                     className="pointListItemContainer"
@@ -58,6 +57,9 @@ function PointList({ points, pointListClickHandler }) {
                 </div>
             ))
             }
+            {points.length === 0 &&
+                <h5 style={{ textAlign: 'center', margin: 0, color: "#FFFFFFF"}}>This point list is empty</h5>}
+
         </div >
     );
 }

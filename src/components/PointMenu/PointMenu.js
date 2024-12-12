@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './PointMenu.css';
 import placeHolder from '../../assets/icons/arco-ufsm.jpg';
 import Spinner from "../../components/Spinner/Spinner";
+import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import { deletePointOfInterest } from '../../services/pointApi'; 
 import { userCheckin, userCheckout, getCheckinInfo } from '../../services/userPointsApi';
 
@@ -10,6 +11,8 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
     const [isLoading, setIsLoading] = useState(false);
     const [checkInCount, setCheckInCount] = useState(0);
     const [hasCheckedIn, setHasCheckedIn] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+    const [profileUserId, setProfileUserId] = useState(null);
 
     useEffect(() => {
         const fetchCheckinInfo = async () => {
@@ -63,24 +66,39 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
         }
     };
 
+    const openProfileMenu = () => {
+        if (point.userId) {
+            setProfileUserId(point.userId); // Set the userId of the creator
+            setIsProfileMenuOpen(true); // Open the profile menu
+        }
+    };
+
     return (
         <div className="pointMenuOverlay" onClick={onClose}>
             <div className="pointMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <div className="pointMenuHeader">
-                    <button onClick={onClose} class="closeButton">✕</button>
-                    <img src={placeHolder} alt='UFSM image'></img>
+                    <button onClick={onClose} className="closeButton">✕</button>
+                    <img src={placeHolder} alt='UFSM'></img>
                     <h3>{point.name}</h3>
                     <p>{point.description}</p>
-                    {point.email && <p style={{marginTop: 2}}><strong>Creator:</strong> {point.email}</p>}
-                    {/* {isOwner && (<button onClick={handleDeleteButton} class="deleteButton">🗑️</button>)} */}
+                    {point.email && (
+                        <p
+                            style={{ marginTop: 2, cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                            onClick={openProfileMenu}
+                        >
+                            <strong>Creator:</strong> {point.email}
+                        </p>
+                    )}
                     <p className="errorMessage">{error}</p>
-                    {isOwner && (<button className="deleteButton" onClick={handleDeleteButton}>
-                        Delete
-                    </button>)}
+                    {isOwner && (
+                        <button className="deleteButton" onClick={handleDeleteButton}>
+                            Delete
+                        </button>
+                    )}
                 </div>
                 <div className="pointMenuContent">
                     <div className="pointMenuCheckInField">
-                        <span style={{marginLeft: '20px', color: 'red', fontWeight: 'bold' }}>
+                        <span style={{ marginLeft: '20px', color: 'red', fontWeight: 'bold' }}>
                             {checkInCount}
                         </span>
                         <h3>Checked-in</h3>
@@ -90,6 +108,15 @@ function PointMenu({ point, userId, onClose, isOwner, showToast }) {
                     </div>
                 </div>
             </div>
+            {isProfileMenuOpen && (
+                <ProfileMenu
+                    isOpen={isProfileMenuOpen}
+                    onClose={() => setIsProfileMenuOpen(false)}
+                    userId={profileUserId}
+                    isOwnProfile={isOwner}
+                    userName={point.creatorName}
+                />
+            )}
         </div>
     );
 }

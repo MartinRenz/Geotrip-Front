@@ -41,7 +41,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                 setIsLoading(false);
             }
         };
-    
+
         if (isOpen) {
             fetchUserData();
         }
@@ -142,10 +142,10 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                 <div className="profileNameContainer">
                     <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>Edit User</h3>
                     <div className="profileImageContainer">
-                        <img 
+                        <img
                             src={userImage}
-                            alt="User Profile Placeholder" 
-                            className="profileImage" 
+                            alt="User Profile Placeholder"
+                            className="profileImage"
                         />
                     </div>
                     <div className="emailInputContainer">
@@ -165,7 +165,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         <img
                             src={editImage}
                             alt="Edit"
-                            onClick={() => {setIsUsernameEditable(!isUsernameEditable); setNewUserName("")}}
+                            onClick={() => { setIsUsernameEditable(!isUsernameEditable); setNewUserName("") }}
                             disabled={isLoading}
                         />
                     </div>
@@ -180,13 +180,13 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                             }}
                             onFocus={() => setEmailError(null)}
                             maxLength={30}
-                            disabled={!isEmailEditable || isLoading }
+                            disabled={!isEmailEditable || isLoading}
                             required
                         />
                         <img
                             src={editImage}
                             alt="Edit"
-                            onClick={() => {setIsEmailEditable(!isEmailEditable); setEmail("")}}
+                            onClick={() => { setIsEmailEditable(!isEmailEditable); setEmail("") }}
                             disabled={isLoading}
                         />
                     </div>
@@ -200,13 +200,13 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                             onBlur={validatePassword}
                             onFocus={() => setPasswordError(null)}
                             maxLength={20}
-                            disabled={!isPasswordEditable || isLoading }
+                            disabled={!isPasswordEditable || isLoading}
                             required
                         />
                         <img
                             src={editImage}
                             alt="Edit"
-                            onClick={() => {setIsPasswordEditable(!isPasswordEditable); setPassword("")}}
+                            onClick={() => { setIsPasswordEditable(!isPasswordEditable); setPassword("") }}
                             disabled={isLoading}
                         />
                     </div>
@@ -215,7 +215,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         onClick={handleEditButton}
                         disabled={isLoading}
                     >
-                        {isLoading ? <Spinner color={"#FD7B03"}/> : "Edit"}
+                        {isLoading ? <Spinner color={"#FD7B03"} /> : "Edit"}
                     </button>
                     {/* <h3 className="username">
                         {isOwnProfile && !isEditing && (
@@ -243,6 +243,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         's Profile
                     </h3> */}
                 </div>
+                {userPoints != null && <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>User Points</h3>}
                 <PointList
                     points={userPoints}
                     pointListClickHandler={pointListClickHandler}
