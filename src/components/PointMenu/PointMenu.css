@@ -37,6 +37,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    word-break: break-all;
+    hyphens: auto;
 }
 
 .pointMenuHeader img {

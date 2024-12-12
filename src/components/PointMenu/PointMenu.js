@@ -26,9 +26,9 @@ function PointMenu({ point, onClose, isOwner, showToast }) {
             <div className="pointMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <div className="pointMenuHeader">
                     <button onClick={onClose} class="closeButton">✕</button>
-                    <img src={placeHolder} alt='UFSM'></img>
-                    <h3 style={{ textAlign: 'center', marginBottom: 1, color: "#FD7B03"}}>{point.name}</h3>
-                    <p style={{margin: 2}}>{point.description}</p>
+                    <img src={placeHolder} alt='UFSM image'></img>
+                    <h3>{point.name}</h3>
+                    <p>{point.description}</p>
                     {point.email && <p style={{marginTop: 2}}><strong>Creator:</strong> {point.email}</p>}
                     {/* {isOwner && (<button onClick={handleDeleteButton} class="deleteButton">🗑️</button>)} */}
                     <p className="errorMessage">{error}</p>
