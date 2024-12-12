@@ -3,16 +3,17 @@ import { useEffect } from 'react';
 import { createUser } from "../../services/userApi";
 import editImage from "../../assets/icons/edit.png";
 import "./ProfileMenu.css"
-import { getUserById } from "../../services/userApi";
+import { getUserById, editUser } from "../../services/userApi";
 import { getPointsByOwnerId } from "../../services/pointApi";
 import Spinner from "../../components/Spinner/Spinner";
 import PointList from "../PointList/PointList";
 import userImage from '../../../src/assets/icons/ash.png';
+import { toast } from "react-toastify";
 
 function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointListClickHandler }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [newUserName, setNewUserName] = useState(userName);
+    const [newUserName, setNewUserName] = useState("");
     const [email, setEmail] = useState("");
     const [isEmailEditable, setIsEmailEditable] = useState(false);
     const [isUsernameEditable, setIsUsernameEditable] = useState(false);
@@ -94,12 +95,15 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
         }
         else
         {
+            setError(null);
             setNewUserName(oldValue.username)
         }
         setIsUsernameEditable(!isUsernameEditable);
     }
 
     const handleEditPassword = () => {
+        if(isPasswordEditable)
+            setError(null);
         setPassword("")
         setIsPasswordEditable(!isPasswordEditable);    
     }
@@ -111,17 +115,17 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
         }
         else
         {
+            setError(null);
             setEmail(oldValue.email)
         }
         setIsEmailEditable(!isEmailEditable);    
     }
 
     const validateUsername = () => {
-        if (newUserName.length > 15) {
-            setUsernameError("Username must have less then 15 characters.")
-            return;
+        if (newUserName.length < 5 || newUserName.length > 15) {
+            return "Username must have between 5 and 15 characters.";
         }
-        setUsernameError(null)
+        return null;
     };
 
     const validateEmail = () => {
@@ -130,68 +134,110 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
             ? "E-mail is in an invalid format."
             : null;
 
-        setEmailError(isValidEmail)
+        return isValidEmail;
     };
 
     const validatePassword = () => {
         if (password.length <= 3) {
-            setPasswordError("Password is in an invalid format, and must have between 4 and 20 characters.")
-            return;
+            return "Password is in an invalid format, and must have between 4 and 20 characters.";
         }
-        setPasswordError(null)
+        return null;
     };
 
     const handleEditButton = async () => {
         try {
             setIsLoading(true);
-            if
-            (
-                newUserName === oldValue.username &&
-                email === oldValue.email &&
-                password === ""
-            ) 
-            {
-                setError("The values ​​of the changed fields are the same as the original ones.");
-                setIsLoading(false);
-                return;
+            let validationError = null;
+    
+            if (isUsernameEditable) {
+                if(!newUserName.trim())
+                {
+                    setError("Username field is empty.");
+                    setIsLoading(false);
+                    return;
+                }
+
+                validationError = validateUsername();
+                if (validationError) {
+                    setError(validationError);
+                    setIsLoading(false);
+                    return;
+                }
+            }
+    
+            if (isEmailEditable) {
+                if(!email.trim())
+                {
+                    setError("E-mail field is empty.");
+                    setIsLoading(false);
+                    return;
+                }
+
+                validationError = validateEmail();
+                if (validationError) {
+                    setError(validationError);
+                    setIsLoading(false);
+                    return;
+                }
             }
 
-            if (!newUserName.trim() || !email.trim() || !password.trim()) {
-                validateUsername();
-                validateEmail();
-                validatePassword();
+            if (isPasswordEditable) {
+                if(!password.trim())
+                {
+                        setError("Password field is empty.");
+                        setIsLoading(false);
+                        return;
+                }
+
+                validationError = validatePassword();
+                if (validationError) {
+                    setError(validationError);
+                    setIsLoading(false);
+                    return;
+                }
             }
-            if (emailError != null || passwordError != null || confirmPasswordError) {
+    
+            const updatedFields = {};
+            if (newUserName !== oldValue.username) updatedFields.username = newUserName;
+            if (email !== oldValue.email) updatedFields.email = email;
+            if (password.trim() !== "") updatedFields.password = password;
+    
+            if (Object.keys(updatedFields).length === 0) {
+                setError("No changes were made.");
                 setIsLoading(false);
                 return;
             }
-            const data = await createUser(newUserName, email, password);
-            setMessage(data.message);
+    
+            // Se não houver erro, você pode chamar a API
+            const data = await editUser(userId, updatedFields);
+            toast.success(data.message, {
+                containerId: 'GlobalApplicationToast'
+            });
             setError(null);
+            onClose();
             setIsLoading(false);
         } catch (err) {
-            setError(err.error || 'Something went wrong with the register.');
+            setError(err.error || 'Something went wrong.');
             setIsLoading(false);
             setMessage('');
         }
     };
 
+    // const handleInputChange = (e) => {
+    //     setNewUserName(e.target.value);
+    // };
 
-    const handleInputChange = (e) => {
-        setNewUserName(e.target.value);
-    };
-
-    const handleSaveClick = () => {
-        // Seta novo UserName
-        setIsEditing(false);
-    };
+    // const handleSaveClick = () => {
+    //     // Seta novo UserName
+    //     setIsEditing(false);
+    // };
 
     return isOpen ? (
         <div className="profileMenuOverlay" onClick={onClose}>
             <div className="profileMenuContainer" onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} className="profileCloseButton">✕</button>
                 <div className="profileNameContainer">
-                    <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>Edit User</h3>
+                    <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>My Profile</h3>
                     <div className="profileImageContainer">
                         <img
                             src={userImage}
@@ -205,10 +251,6 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                             placeholder="Username"
                             value={newUserName}
                             onChange={(e) => setNewUserName(e.target.value)}
-                            onBlur={() => {
-                                validateUsername();
-                            }}
-                            onFocus={() => setNewUserName(null)}
                             maxLength={30}
                             disabled={!isUsernameEditable || isLoading}
                             required
@@ -226,10 +268,6 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                             placeholder="E-mail"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            onBlur={() => {
-                                validateEmail();
-                            }}
-                            onFocus={() => setEmailError(null)}
                             maxLength={30}
                             disabled={!isEmailEditable || isLoading}
                             required
@@ -248,8 +286,6 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            onBlur={validatePassword}
-                            onFocus={() => setPasswordError(null)}
                             maxLength={20}
                             disabled={!isPasswordEditable || isLoading}
                             required
@@ -297,7 +333,7 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         's Profile
                     </h3> */}
                 </div>
-                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>User Points</h3>
+                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>My Points</h3>
                 <PointList
                     points={userPoints}
                     pointListClickHandler={pointListClickHandler}
