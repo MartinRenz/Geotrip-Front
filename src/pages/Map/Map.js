@@ -48,7 +48,6 @@ function Map() {
   };
 
   function HandleIsPointOwner(point) {
-    console.warn(point);
     if(point.user_id === userId)
       return true;
 
@@ -67,7 +66,6 @@ function Map() {
         },
         (error) => {
           setError("Erro ao obter localização do usuário.");
-          console.error("Erro ao obter localização:", error);
         },
         {
           enableHighAccuracy: true, // Habilita alta precisão
@@ -107,8 +105,6 @@ function Map() {
       },
     };
 
-    console.log("Fetching points for visible area:", coordinates);
-
     try {
       const data = await getPointsByCoordinates({
         northEast: coordinates.northEast,
@@ -117,6 +113,7 @@ function Map() {
       });
       setPointsOfInterest(data.points);
     } catch (error) {
+      // Add toast
       console.error("Error fetching points:", error);
     }
   };
@@ -144,8 +141,6 @@ function Map() {
   if (error) {
     return <div>{error}</div>;
   }
-
-  console.warn("userId", userId);
 
   return (
     <div style={{ position: "relative", height: "100vh", width: "100vw" }}>

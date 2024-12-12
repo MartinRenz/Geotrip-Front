@@ -8,13 +8,10 @@ export const getPointsByOwnerId = async (userId) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error('Error fetching points by user ID:', error.response.data);
       throw error.response.data;
     } else if (error.request) {
-      console.error('No response received:', error.request);
       throw { error: 'No response from server' };
     } else {
-      console.error('Error setting up request:', error.message);
       throw { error: error.message };
     }
   }
@@ -26,13 +23,10 @@ export const getPointById = async (id) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error('Error fetching point by ID:', error.response.data);
       throw error.response.data;
     } else if (error.request) {
-      console.error('No response received:', error.request);
       throw { error: 'No response from server' };
     } else {
-      console.error('Error setting up request:', error.message);
       throw { error: error.message };
     }
   }
@@ -44,13 +38,10 @@ export const getPointByName = async (name) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error('Error fetching point by name:', error.response.data);
       throw error.response.data;
     } else if (error.request) {
-      console.error('No response received:', error.request);
       throw { error: 'No response from server' };
     } else {
-      console.error('Error setting up request:', error.message);
       throw { error: error.message };
     }
   }
@@ -62,13 +53,10 @@ export const getPointsByCoordinates = async ({northEast, southWest, zoom}) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error('Error fetching points by coordinates:', error.response.data);
       throw error.response.data;
     } else if (error.request) {
-      console.error('No response received:', error.request);
       throw { error: 'No response from server' };
     } else {
-      console.error('Error setting up request:', error.message);
       throw { error: error.message };
     }
   }
@@ -87,13 +75,10 @@ export const createPointOfInterest = async ({name, description, latitude, longit
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error('Error creating point of interest:', error.response.data);
       throw error.response.data;
     } else if (error.request) {
-      console.error('No response received:', error.request);
       throw { error: 'No response from server' };
     } else {
-      console.error('Error setting up request:', error.message);
       throw { error: error.message };
     }
   }
@@ -105,13 +90,10 @@ export const deletePointOfInterest = async (pointId) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error('Error deleting point of interest:', error.response.data);
       throw error.response.data;
     } else if (error.request) {
-      console.error('No response received:', error.request);
       throw { error: 'No response from server' };
     } else {
-      console.error('Error setting up request:', error.message);
       throw { error: error.message };
     }
   }
