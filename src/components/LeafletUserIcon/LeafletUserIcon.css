@@ -1,0 +1,27 @@
+.user-marker {
+  transition: transform 0.2s ease;
+  animation: fadeInOut 2s ease-in-out infinite;
+  /* Adiciona uma transição suave */
+}
+
+.user-marker:hover {
+  transform: scale(1.2);
+  /* Aumenta o ícone em 20% quando o mouse está sobre ele */
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+    /* Opacidade normal */
+  }
+
+  50% {
+    opacity: 0.5;
+    /* Levemente transparente */
+  }
+
+  100% {
+    opacity: 1;
+    /* Volta ao normal */
+  }
+}

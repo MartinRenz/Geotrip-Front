@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 
 function SideMenu() {
-  console.warn("SIDE")
   return (
     <div style={{ display: "flex" }}>
         <h2>Teatro Machado de Assis</h2>

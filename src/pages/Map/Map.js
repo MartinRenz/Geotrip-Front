@@ -8,6 +8,7 @@ import PointMenu from '../../components/PointMenu/PointMenu.js';
 import { getPointsByCoordinates } from '../../services/pointApi.js';  
 import { useLocation } from 'react-router-dom';
 import "leaflet/dist/leaflet.css";
+import userIcon from "../../components/LeafletUserIcon/LeafletUserIcon.js";
 import createCustomIcon from "../../components/LeafletIcon/LeafletIcon.js";
 import { toast } from "react-toastify";
 
@@ -61,7 +62,6 @@ function Map() {
   };
 
   function HandleIsPointOwner(point) {
-    console.warn(point);
     if(point.user_id === userId)
       return true;
 
@@ -80,7 +80,6 @@ function Map() {
         },
         (error) => {
           setError("Erro ao obter localização do usuário.");
-          console.error("Erro ao obter localização:", error);
         },
         {
           enableHighAccuracy: true, // Habilita alta precisão
@@ -120,8 +119,6 @@ function Map() {
       },
     };
 
-    console.log("Fetching points for visible area:", coordinates);
-
     try {
       const data = await getPointsByCoordinates({
         northEast: coordinates.northEast,
@@ -130,6 +127,7 @@ function Map() {
       });
       setPointsOfInterest(data.points);
     } catch (error) {
+      // Add toast
       console.error("Error fetching points:", error);
     }
   };
@@ -158,8 +156,6 @@ function Map() {
     return <div>{error}</div>;
   }
 
-  console.warn("userId", userId);
-
   return (
     <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
       <SearchBar pointsOfInterest={pointsOfInterest} onSearch={handleSearch} />
@@ -175,7 +171,7 @@ function Map() {
         />
         <Marker
           position={[location.latitude, location.longitude]}
-          icon={createCustomIcon()}
+          icon={userIcon()}
           eventHandlers={{
             click: () => {
               if (mapRef.current) {

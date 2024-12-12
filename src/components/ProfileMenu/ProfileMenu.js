@@ -27,11 +27,10 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
         // Fetch points when menu is open
         const fetchPoints = async () => {
             try {
-                console.log("Fetching points of interest... for " + userId);
                 const data = await getPointsByOwnerId(userId);
-                console.log("Fetched points:", data.points);
                 setUserPoints(data.points); // Update the state with fetched points
             } catch (error) {
+                // Add toast
                 console.error("Error fetching points of interest:", error);
             }
         };

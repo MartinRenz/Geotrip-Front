@@ -42,7 +42,6 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId, showToast }) {
                 },
                 (error) => {
                     setError("Erro ao obter localização do usuário.");
-                    console.error("Erro ao obter localização:", error);
                 },
                 {
                     enableHighAccuracy: true, // Habilita alta precisão
@@ -103,7 +102,6 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId, showToast }) {
     };
 
     const validatePointName = () => {
-        console.warn(pointName)
         if (pointName.length <= 5) {
             setPointNameError("Name is in an invalid format, and must be longer than 5 characters.")
             return;
