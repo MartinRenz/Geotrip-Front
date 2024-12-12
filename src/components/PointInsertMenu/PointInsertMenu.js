@@ -126,7 +126,7 @@ function PointInsertMenu({ isOpen, onClose, onConfirm, userId }) {
                     placeholder="Name"
                     value={pointName}
                     onChange={(e) => setPointName(e.target.value)}
-                    maxLength={40}
+                    maxLength={24}
                     required
                     className="pointMenuInput"
                 />
