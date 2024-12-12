@@ -7,6 +7,7 @@ import { getUserById } from "../../services/userApi";
 import { getPointsByOwnerId } from "../../services/pointApi";
 import Spinner from "../../components/Spinner/Spinner";
 import PointList from "../PointList/PointList";
+import userImage from '../../../src/assets/icons/ash.png';
 
 function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointListClickHandler }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -140,6 +141,13 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                 <button onClick={onClose} className="profileCloseButton">✕</button>
                 <div className="profileNameContainer">
                     <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>Edit User</h3>
+                    <div className="profileImageContainer">
+                        <img 
+                            src={userImage}
+                            alt="User Profile Placeholder" 
+                            className="profileImage" 
+                        />
+                    </div>
                     <div className="emailInputContainer">
                         <input
                             type="text"
@@ -235,7 +243,6 @@ function ProfileMenu({ isOpen, onClose, userId, userName, isOwnProfile, pointLis
                         's Profile
                     </h3> */}
                 </div>
-                <h3 style={{ textAlign: 'center', margin: 0, color: "#FD7B03" }}>User Points</h3>
                 <PointList
                     points={userPoints}
                     pointListClickHandler={pointListClickHandler}

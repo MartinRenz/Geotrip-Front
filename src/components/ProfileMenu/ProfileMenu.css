@@ -126,6 +126,26 @@
     line-height: 0;
 }
 
+.profileImageContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.profileImage {
+    width: 100px;
+    /* Define a largura da imagem */
+    height: 100px;
+    /* Define a altura da imagem */
+    border-radius: 50%;
+    /* Torna a imagem circular */
+    object-fit: cover;
+    /* Garante que a imagem se ajuste corretamente ao contêiner */
+    border: 2px solid #FD7B03;
+    /* Adiciona uma borda com cor */
+}
+
 .editButton {
     padding: 10px;
     width: 100%;
